@@ -36,7 +36,7 @@ PolyExponent:
 		Push32A 							; push FPA as we want it restored after this bit.
 		jsr 	FloatInteger 				; take and save the integer part
 		lda 	floatAMantissa+0 			
-		sta 	PolyExponentTemp
+		sta 	polyExponentTemp
 		Pop32B
 		Copy32BA
 		jsr 	FloatFractional 			; extract the fractional part
@@ -48,8 +48,8 @@ PolyExponent:
 
 		sec 								; negate the exponent
 		lda 	#0
-		sbc 	PolyExponentTemp
-		sta 	PolyExponentTemp
+		sbc 	polyExponentTemp
+		sta 	polyExponentTemp
 
 		lda 	#$80 						; make FPA negative
 		sta 	floatAFlags
@@ -64,7 +64,7 @@ _PENotNegative:
 		;		Add the exponent extracted earlier
 		;
 		clc
-		lda 	PolyExponentTemp
+		lda 	polyExponentTemp
 		adc 	floatAExponent
 		sta 	floatAExponent
 

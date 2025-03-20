@@ -66,7 +66,7 @@ FloatCopy32BA6502:
 ; -------------------------------------------------------------------------------------------
 
 FloatCopy32AR6502:
-        copyreg floatAFlags,rFlags
+        copyreg floatAFlags,floatRFlags
         rts
 
 ; -------------------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ FloatCopy32AR6502:
 ; -------------------------------------------------------------------------------------------
 
 FloatCopy32RA6502:
-        copyreg rFlags,floatAFlags
+        copyreg floatRFlags,floatAFlags
         rts
     
 ; -------------------------------------------------------------------------------------------
@@ -147,10 +147,10 @@ FloatShr32B6502:
 ;
 ; -------------------------------------------------------------------------------------------
 FloatShr32R6502:
-        lsr     rMantissa+3
-        ror     rMantissa+2
-        ror     rMantissa+1
-        ror     rMantissa+0
+        lsr     floatRMantissa+3
+        ror     floatRMantissa+2
+        ror     floatRMantissa+1
+        ror     floatRMantissa+0
         rts
 ; -------------------------------------------------------------------------------------------
 ;
@@ -223,10 +223,10 @@ FloatTest32B6502:
 ;
 ; -------------------------------------------------------------------------------------------
 FloatTest32R6502:
-        lda     rMantissa+0
-        ora     rMantissa+1
-        ora     rMantissa+2
-        ora     rMantissa+3
+        lda     floatRMantissa+0
+        ora     floatRMantissa+1
+        ora     floatRMantissa+2
+        ora     floatRMantissa+3
         rts
 
 ; -------------------------------------------------------------------------------------------
@@ -235,14 +235,14 @@ FloatTest32R6502:
 ;
 ; -------------------------------------------------------------------------------------------
 FloatPush32A6502:
-        ldy     FloatStackPointer
+        ldy     floatStackPointer
         ldx     #5
 _FPLoop:lda     floatAFlags,x
-        sta     FloatStack,y
+        sta     floatStack,y
         iny
         dex
         bpl     _FPLoop
-        sty     FloatStackPointer        
+        sty     floatStackPointer        
 
         rts
 
@@ -253,14 +253,14 @@ _FPLoop:lda     floatAFlags,x
 ; -------------------------------------------------------------------------------------------
 
 FloatPop32B6502:
-        ldy     FloatStackPointer
+        ldy     floatStackPointer
         ldx     #0
 _FPLoop:dey
-        lda     FloatStack,y
+        lda     floatStack,y
         sta     floatBFlags,x
         inx
         cpx     #6
         bne     _FPLoop        
-        sty     FloatStackPointer        
+        sty     floatStackPointer        
         rts
 

@@ -44,7 +44,7 @@ _FFTSFracLoop:
         lda     floatBExponent                   ; if it is a small number stop here
         cmp     #$DE
         bcc     _FFTSExit
-        lda     FloatBufferSize             ; too long a decimal
+        lda     floatBufferSize             ; too long a decimal
         cmp     #15
         bcs     _FFTSExit
         lda     #10                         ; multiply that by 10.
@@ -58,15 +58,15 @@ _FFTSFracLoop:
         bra     _FFTSFracLoop               ; and go round again.
 
 _FFTSExit:    
-        ldx     FloatBufferSize             ; check for trailing zero
-        lda     FloatBufferString-1,x       ; ends in a zero, but not .0
+        ldx     floatBufferSize             ; check for trailing zero
+        lda     floatBufferString-1,x       ; ends in a zero, but not .0
         cmp     #"0"
         bne     _FFTSNotTrailingZero
-        lda     FloatBufferString-2,x
+        lda     floatBufferString-2,x
         cmp     #"."
         beq     _FFTSNotTrailingZero
-        dec     FloatBufferSize             ; patch up.
-        stz     FloatBufferString-1,x
+        dec     floatBufferSize             ; patch up.
+        stz     floatBufferString-1,x
 _FFTSNotTrailingZero:
         ply
         plx

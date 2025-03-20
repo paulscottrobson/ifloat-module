@@ -9,7 +9,7 @@
 ; *******************************************************************************************
 ; *******************************************************************************************
 
-FloatCodeResume = *
+floatCodeResume = *
 
 ; *******************************************************************************************
 ;
@@ -44,9 +44,9 @@ floatZ0:
 
 		* = dataSpace 
 
-FloatBufferSize:
+floatBufferSize:
 		.fill 	1
-FloatBufferString:
+floatBufferString:
 		.fill 	33
 
 polyCoefficientCount:
@@ -57,25 +57,25 @@ polySign:
 		.fill 	1			
 polyFlag:
 		.fill 	1	
-PolyExponentTemp:
+polyExponentTemp:
 		.fill 	1				
 
-rFlags:
+floatRFlags:
 		.fill 	1
-rExponent:		
+floatRExponent:		
 		.fill 	1
-rMantissa:
+floatRMantissa:
 		.fill 	4
 
-baseConvert:
+floatBaseConvert:
 		.fill 	1
-modulusLowByte:
+floatModulusLowByte:
 		.fill 	1	
 
-FloatStackPointer:
+floatStackPointer:
         .fill   1
-FloatStack:
+floatStack:
         .fill   5*6
 
-        * = FloatCodeResume
+        * = floatCodeResume
         

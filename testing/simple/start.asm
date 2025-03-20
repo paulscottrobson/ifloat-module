@@ -26,9 +26,9 @@ Boot:
 		bpl 	-
 
         lda     #1
-        sta     FloatBufferSize
+        sta     floatBufferSize
         lda     #"?"
-        sta     FloatBufferString
+        sta     floatBufferString
 
         lda     #_testString & $FF
         sta     floatZ0

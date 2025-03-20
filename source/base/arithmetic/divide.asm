@@ -69,7 +69,7 @@ _FMFDivide:
 _FFDMain:
         ldx     #5                          ; clear FPR
 _FFDClearR:
-        stz     rFlags,x
+        stz     floatRFlags,x
         dex
         bpl     _FFDClearR
 
@@ -81,7 +81,7 @@ _FFDLoop:
         jsr     FloatDivShiftARLeft         ; shift FPA:FPR left one.
         plp                                 ; restore the result
         bcc     _FFDFail                    ; could not subtract
-        inc     rMantissa+0                 ; set bit 0 (cleared by shift left)
+        inc     floatRMantissa+0                 ; set bit 0 (cleared by shift left)
 _FFDFail:
         pla                                 ; pull and loop
         dec     a
@@ -118,7 +118,7 @@ _FMDivide:
         pha
         jsr     _FIDMain                    ; the main integer division routine
         lda     floatAMantissa                   ; save the LSB of the remainder for later
-        sta     modulusLowByte      
+        sta     floatModulusLowByte      
         Copy32RA                            ; FPA := FPR
         pla                                 ; restore sign.
         and     #$7F
@@ -142,7 +142,7 @@ _FIDLoop:
         jsr     FloatDivShiftARLeft         ; shift FPA:FPR left one.
         jsr     FloatDivTrySubtract         ; try to subtract
         bcc     _FIDFail                    ; could not subtract
-        inc     rMantissa+0                 ; set bit 0 (cleared by shift left)
+        inc     floatRMantissa+0                 ; set bit 0 (cleared by shift left)
 _FIDFail:
         pla                                 ; pull and loop
         dec     a
@@ -156,10 +156,10 @@ _FIDFail:
 ; *******************************************************************************************
 
 FloatDivShiftARLeft:
-        asl     rMantissa+0                 ; do the lower byte ....    
-        rol     rMantissa+1
-        rol     rMantissa+2
-        rol     rMantissa+3
+        asl     floatRMantissa+0                 ; do the lower byte ....    
+        rol     floatRMantissa+1
+        rol     floatRMantissa+2
+        rol     floatRMantissa+3
         rol     floatAMantissa+0                 ; the upper byte. This is only used in divide so
         rol     floatAMantissa+1                 ; it's not really worth optimising. 
         rol     floatAMantissa+2

@@ -32,7 +32,7 @@ FloatIntegerToString:
         pha                                 ; save registers
         phx
         phy
-        sta     baseConvert                 ; save the base to convert
+        sta     floatBaseConvert                 ; save the base to convert
 
         stz     floatBufferSize                 ; clear the buffer, both NULL terminated and length prefixed.
         stz     floatBufferString
@@ -50,10 +50,10 @@ _FITSPositive:
         rts             
 
 _FITSRecursive:
-        lda     baseConvert                 ; divide by the base, put in B
+        lda     floatBaseConvert                 ; divide by the base, put in B
         Set32B                      
         jsr     FloatIntDivide              ; integer division.
-        lda     modulusLowByte              ; get the low byte, the remainder and save it.
+        lda     floatModulusLowByte              ; get the low byte, the remainder and save it.
         pha
         Test32A                             ; zero ?
         beq     _FITSZero

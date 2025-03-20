@@ -53,7 +53,7 @@ _FMMultiply:
         ;       Main multiplication loop. FPA is the total, FPB is the additive multiplies, FPR is the right shifting multiplier.
         ;
 _FMMultiplyLoop:
-        lda     rMantissa+0                 ; check LSB of FPR
+        lda     floatRMantissa+0                 ; check LSB of FPR
         and     #1
         beq     _FMNoAdd                    
 
