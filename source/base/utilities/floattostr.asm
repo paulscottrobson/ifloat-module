@@ -19,7 +19,7 @@ FloatFloatToString:
         pha
         phx
         phy
-        lda     aExponent                   ; is it actually an integer ?
+        lda     floatAExponent                   ; is it actually an integer ?
         bne     _FFTSFloat
         jsr     FloatIntegerToDecimalString ; if so, just do the integer conversion
         ply
@@ -41,7 +41,7 @@ _FFTSFracLoop:
         Copy32BA                            ; put the value in A
         jsr     FloatFractional             ; take the fractional part.
         jsr     FloatNormaliseA             ; normalise it.
-        lda     bExponent                   ; if it is a small number stop here
+        lda     floatBExponent                   ; if it is a small number stop here
         cmp     #$DE
         bcc     _FFTSExit
         lda     FloatBufferSize             ; too long a decimal
@@ -52,7 +52,7 @@ _FFTSFracLoop:
         jsr     FloatMultiply
         Push32A                             ; save result on the stack for the next time round.
         jsr     FloatInteger                ; convert to an integer
-        lda     aMantissa+0                 ; output as a digit
+        lda     floatAMantissa+0                 ; output as a digit
         ora     #48
         jsr     FloatAddCharacterToBuffer
         bra     _FFTSFracLoop               ; and go round again.

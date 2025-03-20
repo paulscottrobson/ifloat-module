@@ -1,9 +1,6 @@
 # TODO List
 
-## Polynomial group
-- Test depth of push pop, Rig up better.
-
-## Then
+    ## Then
 - Rename stuff.
 - Tidy up.
 - Outer call (needs to zero internal stack and the string size and data)

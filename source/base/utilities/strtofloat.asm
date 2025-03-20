@@ -2,7 +2,7 @@
 ; *******************************************************************************************
 ;
 ;		Name : 		strtofloat.asm
-;		Purpose :	Convert value at (zTemp0) to a floating point number in A
+;		Purpose :	Convert value at (floatZ0) to a floating point number in A
 ;		Date :		20th March 2025
 ;		Author : 	Paul Robson (paul@robsons.org.uk)
 ;
@@ -11,7 +11,7 @@
 
 ; *******************************************************************************************
 ;
-;					Convert string at (zTemp0) into FPA. Return CS on error.
+;					Convert string at (floatZ0) into FPA. Return CS on error.
 ;		 Behaves like VAL() in that it does not have a problem with ending bad characters
 ;
 ; *******************************************************************************************
@@ -24,7 +24,7 @@ FloatStringToFloat:
 		;		Process possible preceding '-'
 		;
         ldy     #0
-		lda 	(zTemp0) 					; get, and push, the first character.
+		lda 	(floatZ0) 					; get, and push, the first character.
 		eor 	#"-"						; will be $00 if it is '-', non zero otherwise
 		beq 	_FSTFNoFlip
 		lda 	#$80 						; $00 => '-', $80 => positive
@@ -40,14 +40,14 @@ _FSTFNoMinus:
 		;
 		Clear32A 							; zero FPA
 		ldy 	#1 							; this is the amount to skip if decimal.
-		FloatLoadI zTemp0					; is it '.xxxxx' VAL(".12") => 0.12
+		FloatLoadI floatZ0					; is it '.xxxxx' VAL(".12") => 0.12
 		cmp 	#"."						; if so, convert to decimal.
 		beq 	_FSTFDecimalPart
 
 		jsr 	FloatStringToInt 	 		; get the integer part first.
 		bcs 	_FSTFExit 					; bad number.
 		tay 								; count of characters in Y
-		FloatLoadIY zTemp0 					; what follows is '.'
+		FloatLoadIY floatZ0 					; what follows is '.'
 		cmp 	#'.' 						; if not, then exit with a whole number and carry clear
 		bne 	_FSTFExitOkay
 		iny
@@ -55,9 +55,9 @@ _FSTFNoMinus:
 		;		The fractional part, if there is one.
 		;
 _FSTFDecimalPart:
-		tya 								; point zTemp0 to post decimal point bit.
+		tya 								; point floatZ0 to post decimal point bit.
         jsr     _FSTFAddToPointer
-		FloatLoadI zTemp0 					; character following, if illegal just ignore it.
+		FloatLoadI floatZ0 					; character following, if illegal just ignore it.
 		cmp 	#'0' 						; VAL("12.") => 12
 		bcc 	_FSTFExitOkay
 		cmp 	#'9'+1
@@ -70,7 +70,7 @@ _FSTFDecimalPart:
 		jsr 	FloatAdd 					; add them together.
 _FSTFExitOkay:
 		pla 								; get flags
-		sta 	aFlags
+		sta 	floatAFlags
 		clc 								; result is okay.
 _FSTFExit:		
 		ply 								; restore registers
@@ -86,11 +86,11 @@ _FSTFExit:
 
 _FSTFAddToPointer:
         clc
-        adc     zTemp0
-        sta     zTemp0
+        adc     floatZ0
+        sta     floatZ0
         bcc     _FSTFNoCarry
-        inc     zTemp0+1
+        inc     floatZ0+1
         bne     _FSTFNoCarry
-        inc     zTemp0+2
+        inc     floatZ0+2
 _FSTFNoCarry:       
         rts

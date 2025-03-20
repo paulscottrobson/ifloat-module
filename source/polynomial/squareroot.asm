@@ -19,12 +19,12 @@ PolySquareRoot:
 		pha
 		phx
 		phy
-		bit 	aFlags 						; negative
+		bit 	floatAFlags 						; negative
 		sec
 		bmi 	_PSRExit 					; if so exit with carry set
 
 		jsr 	PolyLogarithmE 				; Log(FPA)
-		dec 	aExponent 					; / 2
+		dec 	floatAExponent 					; / 2
 		jsr 	PolyExponent 				; Exp(FPA)
 		clc
 _PSRExit:

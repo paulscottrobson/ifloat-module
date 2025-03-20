@@ -23,15 +23,15 @@ FloatScale10:
 		cmp	 	#16 						; divider >= 16
 		bcs 	_FSCZero 					; return zero.
 
-		sta 	bMantissa 					; temporary store, we want to x 3
+		sta 	floatBMantissa 					; temporary store, we want to x 3
 		asl 	 							; x 2
-		adc 	bMantissa 					; x 3
+		adc 	floatBMantissa 					; x 3
 		asl 	 							; x 6
 		tax
 		ldy 	#0 							; index into FPB
 _FSCCopy:
 		lda 	FloatScalarTable,x 			; copy it
-		sta 	bFlags,y
+		sta 	floatBFlags,y
 		inx
 		iny
 		cpy 	#6 							; copied 6 bytes of float data

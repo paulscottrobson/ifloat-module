@@ -37,9 +37,9 @@ FloatIntegerToString:
         stz     floatBufferSize                 ; clear the buffer, both NULL terminated and length prefixed.
         stz     floatBufferString
 
-        bit     aFlags                      ; -ve ?
+        bit     floatAFlags                      ; -ve ?
         bpl     _FITSPositive
-        stz     aFlags                      ; not really required :)
+        stz     floatAFlags                      ; not really required :)
         lda     #'-'                        ; output -
         jsr     FloatAddCharacterToBuffer
 _FITSPositive:      

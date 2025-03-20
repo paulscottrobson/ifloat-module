@@ -37,13 +37,13 @@ _FMFDivide:
         jsr     FloatNormaliseA             ; normalise FPA & FPB                   
         jsr     FloatNormaliseB                     
 
-        lda     aFlags                      ; calculate new sign and push on stack
-        eor     bFlags
+        lda     floatAFlags                      ; calculate new sign and push on stack
+        eor     floatBFlags
         pha
         ;
         sec                                 ; calculate new exponent
-        lda     aExponent
-        sbc     bExponent
+        lda     floatAExponent
+        sbc     floatBExponent
         sec
         sbc     #30
         pha
@@ -52,10 +52,10 @@ _FMFDivide:
         Copy32RA                            ; FPA := FPR
 
         pla                                 ; restore exponent.
-        sta     aExponent           
+        sta     floatAExponent           
         pla                                 ; restore sign.
         and     #$80
-        sta     aFlags
+        sta     floatAFlags
 
         jsr     FloatCheckMinusZero         ; -0 check required here.
         ply                                 ; restore registers
@@ -113,16 +113,16 @@ FloatIntDivide:                             ; it's integer division in the Float
         ;       Integer Divide.
         ;
 _FMDivide:
-        lda     aFlags                      ; calculate new sign and push on stack
-        eor     bFlags
+        lda     floatAFlags                      ; calculate new sign and push on stack
+        eor     floatBFlags
         pha
         jsr     _FIDMain                    ; the main integer division routine
-        lda     aMantissa                   ; save the LSB of the remainder for later
+        lda     floatAMantissa                   ; save the LSB of the remainder for later
         sta     modulusLowByte      
         Copy32RA                            ; FPA := FPR
         pla                                 ; restore sign.
         and     #$7F
-        sta     aFlags
+        sta     floatAFlags
 
         jsr     FloatCheckMinusZero         ; -0 check required here.
         ply                                 ; restore registers
@@ -160,10 +160,10 @@ FloatDivShiftARLeft:
         rol     rMantissa+1
         rol     rMantissa+2
         rol     rMantissa+3
-        rol     aMantissa+0                 ; the upper byte. This is only used in divide so
-        rol     aMantissa+1                 ; it's not really worth optimising. 
-        rol     aMantissa+2
-        rol     aMantissa+3
+        rol     floatAMantissa+0                 ; the upper byte. This is only used in divide so
+        rol     floatAMantissa+1                 ; it's not really worth optimising. 
+        rol     floatAMantissa+2
+        rol     floatAMantissa+3
         rts
 
 ; *******************************************************************************************

@@ -19,21 +19,21 @@ FloatCodeResume = *
 
         * = zeroPageSpace
 
-aFlags:
+floatAFlags:
 		.fill 	1
-aExponent:		
+floatAExponent:		
 		.fill 	1
-aMantissa:
+floatAMantissa:
 		.fill 	4
 
-bFlags:
+floatBFlags:
 		.fill 	1
-bExponent:		
+floatBExponent:		
 		.fill 	1
-bMantissa:
+floatBMantissa:
 		.fill 	4
         
-zTemp0:			
+floatZ0:			
 		.fill	3
 
 ; *******************************************************************************************
@@ -72,10 +72,10 @@ baseConvert:
 modulusLowByte:
 		.fill 	1	
 
-ftStackPointer:
+FloatStackPointer:
         .fill   1
-ftStack:
-        .fill   10*6
+FloatStack:
+        .fill   5*6
 
         * = FloatCodeResume
         

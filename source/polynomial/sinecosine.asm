@@ -38,9 +38,9 @@ PolySine:
 		phx
 		phy
 
-		lda 	aFlags						; save original sign
+		lda 	floatAFlags						; save original sign
 		sta 	polySign 					
-		stz 	aFlags 						; take absolute value
+		stz 	floatAFlags 						; take absolute value
 		;
 		;		Divide FPA by 2.Pi and take fractional part, forcing result into the '360' range
 		;
@@ -50,11 +50,11 @@ PolySine:
 		;
 		;		Rounded into 0-360 (in scaled radians), so x 4 to get the quadrant (0=0-90,1=90-180,2=180-270,3=270-360)
 		;
-		inc 	aExponent 					; x 2
-		inc 	aExponent 					; x 4
+		inc 	floatAExponent 					; x 2
+		inc 	floatAExponent 					; x 4
 		Push32A 							; save this value
 		jsr 	FloatInteger
-		lda 	aMantissa+0 				; get the quadrant.
+		lda 	floatAMantissa+0 				; get the quadrant.
 		pha 								; save for later
 		cmp 	#2 							; quadrant 2 + 3, negate the result
 		bcc 	_PSNotQ23
@@ -72,7 +72,7 @@ _PSNotQ23:
 		and 	#1 							; is it quadrant 1 or 3
 		beq 	_PSNotQ13
 		lda 	#$80 						; make FPA -x (calculating 1-x)
-		sta 	aFlags
+		sta 	floatAFlags
 		lda 	#1 							; B = 1, so -x + 1 being done here.
 		Set32B
 		jsr 	FloatAdd
@@ -98,9 +98,9 @@ _PSNotQ13:
 
 		lda 	polySign 					; get original sign
 		bpl 	_PSExit 
-		lda 	aFlags 						; if was -ve negate the result.
+		lda 	floatAFlags 						; if was -ve negate the result.
 		eor 	#$80
-		sta 	aFlags		
+		sta 	floatAFlags		
 _PSExit:		
 		ply
 		plx

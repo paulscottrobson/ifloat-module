@@ -21,7 +21,7 @@ Boot:
 
 		ldx 	#11 						; copy in test data.
 -		lda 	testdata1,x
-		sta 	aFlags,x
+		sta 	floatAFlags,x
 		dex
 		bpl 	-
 
@@ -31,9 +31,9 @@ Boot:
         sta     FloatBufferString
 
         lda     #_testString & $FF
-        sta     zTemp0
+        sta     floatZ0
         lda     #_testString >> 8
-        sta     zTemp0+1
+        sta     floatZ0+1
 
 		jsr 	PolyTangent
 

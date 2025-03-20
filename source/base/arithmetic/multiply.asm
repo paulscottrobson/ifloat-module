@@ -38,12 +38,12 @@ _FMExit1:
         ;
 _FMMultiply:
         clc                                 ; add FPA exponent to FPB exponent
-        lda     aExponent
-        adc     bExponent
+        lda     floatAExponent
+        adc     floatBExponent
         pha
 
-        lda     aFlags                      ; work out the new sign.
-        eor     bFlags
+        lda     floatAFlags                      ; work out the new sign.
+        eor     floatBFlags
         and     #$80
         pha
 
@@ -58,25 +58,25 @@ _FMMultiplyLoop:
         beq     _FMNoAdd                    
 
         Add32AB                             ; add FPB to FPA
-        bit     aMantissa+3                 ; did we get an overflow ?
+        bit     floatAMantissa+3                 ; did we get an overflow ?
         bpl     _FMNoAdd                    ; no, no overflow shift required.
         ;
         ;       Add overflowed, so shift FPA right rather than doubling FPB. In Integer only this will become a float
         ;
         Shr32A                          ; addition on overflow : shift FPA right and bump the exponent.
-        inc     aExponent                   ; this replaces doubling the adder FPB
+        inc     floatAExponent                   ; this replaces doubling the adder FPB
         bra     _FMShiftR
         ;
         ;       Double FPB, the value being added in.
         ;
 _FMNoAdd:       
-        bit     bMantissa+3                 ; is it actually possible to double FPB ?
+        bit     floatBMantissa+3                 ; is it actually possible to double FPB ?
         bvs     _FMCantDoubleB              ; e.g. is bit 30 clear
         Shl32B                          ; if it is clear we can just shift it
         bra     _FMShiftR
 _FMCantDoubleB:
         Shr32A                          ; we can't double FPB so we halve FPA
-        inc     aExponent                   ; this fixes the result up.
+        inc     floatAExponent                   ; this fixes the result up.
         ;
         ;       The usual end of the multiply loop, shift FPR right and loop back if non-zero.
         ;
@@ -87,11 +87,11 @@ _FMShiftR:
 
 _FMExit2:
         pla                                 ; update the sign and exponent.
-        sta     aFlags
+        sta     floatAFlags
         pla
         clc
-        adc     aExponent
-        sta     aExponent
+        adc     floatAExponent
+        sta     floatAExponent
         jsr     FloatCheckMinusZero         ; -0 check required here.
         ply                                 ; restore registers
         plx

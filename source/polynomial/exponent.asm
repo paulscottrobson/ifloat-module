@@ -22,9 +22,9 @@ PolyExponent:
 		;
 		;		Save sign, take absolute value
 		;
-		lda 	aFlags
+		lda 	floatAFlags
 		sta 	polySign
-		stz 	aFlags
+		stz 	floatAFlags
 		;
 		;		Multiply FPA by log2 e
 		;
@@ -35,7 +35,7 @@ PolyExponent:
 		;
 		Push32A 							; push FPA as we want it restored after this bit.
 		jsr 	FloatInteger 				; take and save the integer part
-		lda 	aMantissa+0 			
+		lda 	floatAMantissa+0 			
 		sta 	PolyExponentTemp
 		Pop32B
 		Copy32BA
@@ -52,7 +52,7 @@ PolyExponent:
 		sta 	PolyExponentTemp
 
 		lda 	#$80 						; make FPA negative
-		sta 	aFlags
+		sta 	floatAFlags
 
 _PENotNegative:		
 		;
@@ -65,8 +65,8 @@ _PENotNegative:
 		;
 		clc
 		lda 	PolyExponentTemp
-		adc 	aExponent
-		sta 	aExponent
+		adc 	floatAExponent
+		sta 	floatAExponent
 
 		ply
 		plx

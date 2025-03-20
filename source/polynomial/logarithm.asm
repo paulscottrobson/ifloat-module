@@ -21,7 +21,7 @@ PolyLogarithmE:
 		phy
 
 
-		lda 	aFlags 						; if negative, it's bad
+		lda 	floatAFlags 						; if negative, it's bad
 		sec 								; so return with CS.
 		bmi 	_PLEExit
 
@@ -30,13 +30,13 @@ PolyLogarithmE:
 		;
 		;		Extract the exponent, as a power of 2.
 		;
-		lda 	aExponent 					; work out the shift
+		lda 	floatAExponent 					; work out the shift
 		sec
 		sbc 	#$E1  						; $E1 normalised is the required exponent offset
 		pha  								; save on stack.
 
 		lda 	#$E1 						; force into range 0.5-1
-		sta 	aExponent
+		sta 	floatAExponent
 		;
 		;		Add square root of 0.5
 		;

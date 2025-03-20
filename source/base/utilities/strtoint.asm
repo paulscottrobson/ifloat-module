@@ -11,7 +11,7 @@
 
 ; *******************************************************************************************
 ;
-;		(zTemp0) points to a numeric string, extract decimal integer from it to FPA (no minus 
+;		(floatZ0) points to a numeric string, extract decimal integer from it to FPA (no minus 
 ;		prefix). Return CS on error (overflow, no number), and return in A the number of 
 ;		characters removed.
 ;
@@ -24,7 +24,7 @@ FloatStringToInt:
 		Clear32A 							; set the F{A register to zero.
 		ldy 	#0 							; start from here.
 _FSILoop:	
-		FloatLoadIY zTemp0 					; get next character
+		FloatLoadIY floatZ0 					; get next character
 		cmp 	#'0'						; check validity
 		bcc 	_FSIExit
 		cmp 	#'9'+1
@@ -33,12 +33,12 @@ _FSILoop:
 		lda 	#10 						; multiply FPA by 10
 		Set32B
 		jsr 	FloatMultiply
-		FloatLoadIY zTemp0 					; add number.
+		FloatLoadIY floatZ0 					; add number.
 		iny
 		and 	#$0F
 		Set32B
 		jsr 	FloatAdd  					
-		lda 	aExponent 					; check still an integer.
+		lda 	floatAExponent 					; check still an integer.
 		beq 	_FSILoop
 _FSIFail: 									; overflow, or no digits at all.
 		sec 		

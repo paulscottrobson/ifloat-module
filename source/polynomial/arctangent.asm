@@ -21,15 +21,15 @@ PolyArcTangent:
 		phy
 		jsr 	FloatNormaliseA 			; normalise A so we can compare >= 1
 
-		lda 	aFlags 						; save the current sign of FPA 
+		lda 	floatAFlags 						; save the current sign of FPA 
 		sta 	polySign 					
-		stz 	aFlags 						; take absolute value of A
+		stz 	floatAFlags 						; take absolute value of A
 
 		;
 		;		if FPA >= 1.0, take reciprocal of FPA
 		;
 		stz 	polyFlag 					; clear the adjust flag.
-		lda 	aExponent 					; is the exponent >= $E2 , this means >= 1
+		lda 	floatAExponent 					; is the exponent >= $E2 , this means >= 1
 		bpl 	_PATAdjust 					; definitely > 1 :)
 		cmp 	#$E2 						; $E2..$FF are also > 1
 		bcc 	_PATNotAdjust
@@ -64,9 +64,9 @@ _PATNotAdjust:
 		lda 	polyFlag
 		beq 	_PATNoFixup
 
-		lda 	aFlags 						; FPA = -FPA
+		lda 	floatAFlags 						; FPA = -FPA
 		eor 	#$80
-		sta 	aFlags
+		sta 	floatAFlags
 		PolyConstantToB FLoatConst_PiDiv2		; FPB = Pi/2
 		jsr 	FloatAdd
 _PATNoFixup:		
@@ -74,7 +74,7 @@ _PATNoFixup:
 		;		Restore sign
 		;
 		lda 	polySign 					; restore the original sign
-		sta 	aFlags
+		sta 	floatAFlags
 
 		ply
 		plx
