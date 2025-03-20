@@ -32,14 +32,14 @@ FloatIntegerToString:
         pha                                 ; save registers
         phx
         phy
-        sta     floatBaseConvert                 ; save the base to convert
+        sta     floatBaseConvert            ; save the base to convert
 
-        stz     floatBufferSize                 ; clear the buffer, both NULL terminated and length prefixed.
+        stz     floatBufferSize             ; clear the buffer, both NULL terminated and length prefixed.
         stz     floatBufferString
 
-        bit     floatAFlags                      ; -ve ?
+        bit     floatAFlags                 ; -ve ?
         bpl     _FITSPositive
-        stz     floatAFlags                      ; not really required :)
+        stz     floatAFlags                 ; not really required :)
         lda     #'-'                        ; output -
         jsr     FloatAddCharacterToBuffer
 _FITSPositive:      
@@ -50,12 +50,12 @@ _FITSPositive:
         rts             
 
 _FITSRecursive:
-        lda     floatBaseConvert                 ; divide by the base, put in B
+        lda     floatBaseConvert            ; divide by the base, put in B
         FloatSet32B                      
         jsr     FloatIntDivide              ; integer division.
-        lda     floatModulusLowByte              ; get the low byte, the remainder and save it.
+        lda     floatModulusLowByte         ; get the low byte, the remainder and save it.
         pha
-        FloatTest32A                             ; zero ?
+        FloatTest32A                        ; zero ?
         beq     _FITSZero
         jsr     _FITSRecursive              ; if not, keep going.
 _FITSZero:
@@ -78,9 +78,9 @@ _FITSNotHex:
 
 FloatAddCharacterToBuffer:
         phx
-        ldx     floatBufferSize                 ; current size
-        sta     floatBufferString,x             ; write character out
+        ldx     floatBufferSize             ; current size
+        sta     floatBufferString,x         ; write character out
         stz     floatBufferString+1,x       ; make ASCIIZ
-        inc     floatBufferSize                 ; bump character count
+        inc     floatBufferSize             ; bump character count
         plx
         rts

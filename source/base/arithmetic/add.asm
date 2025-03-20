@@ -33,17 +33,17 @@ FloatAdd:
         phx
         phy
 
-        lda     floatAExponent                   ; check if both integer
+        lda     floatAExponent              ; check if both integer
         ora     floatBExponent
         beq     _FAInteger                  ; if so, don't need to normalise
         ;
         ;       Check zero.
         ;
-        FloatTest32B                            ; check if FPB = 0
+        FloatTest32B                        ; check if FPB = 0
         beq     _FAExit                     ; if so, just return FPA.
-        FloatTest32A                            ; check if FPA = 0
+        FloatTest32A                        ; check if FPA = 0
         bne     _FAFloatingPoint            ; if not, then do FP addition.
-        FloatCopy32BA                           ; copy FPB to FPA
+        FloatCopy32BA                       ; copy FPB to FPA
         bra     _FAExit                     ; and exit
         ;
         ;       Floating point add/subtract
@@ -54,22 +54,22 @@ _FAFloatingPoint:
         ;
         ;       Work out the common exponent for the arithmetic.
         ;
-        lda     floatAExponent                   ; calculate the higher exponent, to X
+        lda     floatAExponent              ; calculate the higher exponent, to X
         tax
         sec
-        sbc     floatBExponent                   ; signed comparison
+        sbc     floatBExponent              ; signed comparison
         bvc     +
         eor     #$80
 +       bpl     +
-        ldx     floatBExponent                   ; get the lower value.
+        ldx     floatBExponent              ; get the lower value.
 +       
         ;
         ;       Shift both mantissa/exponent to match X in FPA
         ;
--       cpx     floatAExponent                   ; reached required exponent (FPA)
+-       cpx     floatAExponent              ; reached required exponent (FPA)
         beq     +
         phx
-        FloatShr32A                             ; shift right and adjust exponent, preserving the target
+        FloatShr32A                         ; shift right and adjust exponent, preserving the target
         plx
         inc     floatAExponent
         bra     -
@@ -77,10 +77,10 @@ _FAFloatingPoint:
         ;
         ;       Shift both mantissa/exponent to match X in B
         ;
--       cpx     floatBExponent                   ; reached required exponent (FPB)
+-       cpx     floatBExponent              ; reached required exponent (FPB)
         beq     +
         phx
-        FloatShr32B                             ; shift right and adjust exponent, preserving the target
+        FloatShr32B                         ; shift right and adjust exponent, preserving the target
         plx
         inc     floatBExponent
         bra     -
@@ -89,26 +89,26 @@ _FAFloatingPoint:
         ;       Now do the mantissa add/subtract and adjustment, figure out which first.
         ;                   
 _FAInteger:
-        lda     floatAFlags                      ; are they different sign flags
-        eor     floatBFlags                      ; e.g. the signs are different, it's a subtraction
+        lda     floatAFlags                 ; are they different sign flags
+        eor     floatBFlags                 ; e.g. the signs are different, it's a subtraction
         bmi     _FASubtraction
 _FAAddition:
         ;
         ;       Integer arithmetic : Addition
         ;
-        FloatAdd32AB                            ; add FPB to FPA - sign of result is inherited.
+        FloatAdd32AB                        ; add FPB to FPA - sign of result is inherited.
         bpl     _FAExit                     ; no overflow, bit 31 of mantissa clear.
-        FloatShr32A                             ; fix up the mantissa
-        inc     floatAExponent                   ; bump the exponent
+        FloatShr32A                         ; fix up the mantissa
+        inc     floatAExponent              ; bump the exponent
         bra     _FAExit                     ; and quit.
         ;
         ;       Integer arithmetic : Subtraction
         ;   
 _FASubtraction:
-        FloatSub32AB                            ; subtract FPB from FPA
+        FloatSub32AB                        ; subtract FPB from FPA
         bpl     _FAExit                     ; no underflow, then exit.
-        FloatNeg32A                             ; negate FPA mantissa 
-        lda     floatAFlags                      ; toggle the sign flag
+        FloatNeg32A                         ; negate FPA mantissa 
+        lda     floatAFlags                 ; toggle the sign flag
         eor     #$80
         sta     floatAFlags
         bra     _FAExit
@@ -129,11 +129,11 @@ _FAExit:
 ; *******************************************************************************************
 
 FloatCheckMinusZero:
-        lda     floatAFlags                      ; slight increase as mostly +ve
+        lda     floatAFlags                 ; slight increase as mostly +ve
         bpl     _FCMZExit
-        FloatTest32A                            ; if a zero mantissa
+        FloatTest32A                        ; if a zero mantissa
         bne     _FCMZExit
-        lda     floatAFlags                      ; clear the sign bit
+        lda     floatAFlags                 ; clear the sign bit
         and     #$7F
         sta     floatAFlags
 _FCMZExit:              
@@ -146,10 +146,10 @@ _FCMZExit:
 ; *******************************************************************************************
 
 FloatNormaliseA:
-        FloatTest32A                            ; check FPA zero
+        FloatTest32A                        ; check FPA zero
         beq     _NAExit     
 -
-        lda     floatAMantissa+3                 ; check normalised
+        lda     floatAMantissa+3            ; check normalised
         and     #$40
         bne     _NAExit     
         FloatShl32A
@@ -159,10 +159,10 @@ _NAExit:
         rts             
         
 FloatNormaliseB:
-        FloatTest32B                            ; check FPB zero
+        FloatTest32B                        ; check FPB zero
         beq     _NBExit
 -
-        lda     floatBMantissa+3                 ; check normalised
+        lda     floatBMantissa+3            ; check normalised
         and     #$40
         bne     _NBExit     
         FloatShl32B

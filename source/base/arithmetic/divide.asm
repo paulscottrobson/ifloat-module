@@ -23,7 +23,7 @@ FloatDivide:
         ;
         ;       Check division by zero.
         ;
-        FloatTest32B                             ; check if FPB = 0
+        FloatTest32B                        ; check if FPB = 0
         bne     _FMFDivide                  ; if not, do divide
         ply                                 ; restore registers
         plx
@@ -37,7 +37,7 @@ _FMFDivide:
         jsr     FloatNormaliseA             ; normalise FPA & FPB                   
         jsr     FloatNormaliseB                     
 
-        lda     floatAFlags                      ; calculate new sign and push on stack
+        lda     floatAFlags                 ; calculate new sign and push on stack
         eor     floatBFlags
         pha
         ;
@@ -49,7 +49,7 @@ _FMFDivide:
         pha
 
         jsr     _FFDMain                    ; the main float division routine
-        FloatCopy32RA                            ; FPA := FPR
+        FloatCopy32RA                       ; FPA := FPR
 
         pla                                 ; restore exponent.
         sta     floatAExponent           
@@ -81,7 +81,7 @@ _FFDLoop:
         jsr     FloatDivShiftARLeft         ; shift FPA:FPR left one.
         plp                                 ; restore the result
         bcc     _FFDFail                    ; could not subtract
-        inc     floatRMantissa+0                 ; set bit 0 (cleared by shift left)
+        inc     floatRMantissa+0            ; set bit 0 (cleared by shift left)
 _FFDFail:
         pla                                 ; pull and loop
         dec     a
@@ -102,7 +102,7 @@ FloatIntDivide:                             ; it's integer division in the Float
         ;
         ;       Check division by zero.
         ;
-        FloatTest32B                             ; check if FPB = 0
+        FloatTest32B                        ; check if FPB = 0
         bne     _FMDivide                   ; if not, do divide code
         ply                                 ; restore registers
         plx
@@ -113,13 +113,13 @@ FloatIntDivide:                             ; it's integer division in the Float
         ;       Integer Divide.
         ;
 _FMDivide:
-        lda     floatAFlags                      ; calculate new sign and push on stack
+        lda     floatAFlags                 ; calculate new sign and push on stack
         eor     floatBFlags
         pha
         jsr     _FIDMain                    ; the main integer division routine
-        lda     floatAMantissa                   ; save the LSB of the remainder for later
+        lda     floatAMantissa              ; save the LSB of the remainder for later
         sta     floatModulusLowByte      
-        FloatCopy32RA                            ; FPA := FPR
+        FloatCopy32RA                       ; FPA := FPR
         pla                                 ; restore sign.
         and     #$7F
         sta     floatAFlags
@@ -134,15 +134,15 @@ _FMDivide:
 ;       Main integer division routine.
 ;
 _FIDMain:
-        FloatCopy32AR                            ; FPR := FPA
-        FloatClear32A                            ; FPA := 0
+        FloatCopy32AR                       ; FPR := FPA
+        FloatClear32A                       ; FPA := 0
         lda     #32                         ; Main loop counter
 _FIDLoop:
         pha                                 ; save counter.
         jsr     FloatDivShiftARLeft         ; shift FPA:FPR left one.
         jsr     FloatDivTrySubtract         ; try to subtract
         bcc     _FIDFail                    ; could not subtract
-        inc     floatRMantissa+0                 ; set bit 0 (cleared by shift left)
+        inc     floatRMantissa+0            ; set bit 0 (cleared by shift left)
 _FIDFail:
         pla                                 ; pull and loop
         dec     a
@@ -156,12 +156,12 @@ _FIDFail:
 ; *******************************************************************************************
 
 FloatDivShiftARLeft:
-        asl     floatRMantissa+0                 ; do the lower byte ....    
+        asl     floatRMantissa+0            ; do the lower byte ....    
         rol     floatRMantissa+1
         rol     floatRMantissa+2
         rol     floatRMantissa+3
-        rol     floatAMantissa+0                 ; the upper byte. This is only used in divide so
-        rol     floatAMantissa+1                 ; it's not really worth optimising. 
+        rol     floatAMantissa+0            ; the upper byte. This is only used in divide so
+        rol     floatAMantissa+1            ; it's not really worth optimising. 
         rol     floatAMantissa+2
         rol     floatAMantissa+3
         rts
@@ -173,9 +173,9 @@ FloatDivShiftARLeft:
 ; *******************************************************************************************
 
 FloatDivTrySubtract:
-        FloatSub32AB                             ; subtract FPB from FPA
+        FloatSub32AB                        ; subtract FPB from FPA
         bcs     _FDTSExit                   ; it worked okay.
-        FloatAdd32AB                             ; failed, so add it back
+        FloatAdd32AB                        ; failed, so add it back
         clc                                 ; carry must be clear.
 _FDTSExit:
         rts     

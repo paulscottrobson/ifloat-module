@@ -20,15 +20,15 @@ FloatInteger:
         phx
         phy
 
-        lda     floatAExponent                   ; exponent >= 0, then already integer
+        lda     floatAExponent              ; exponent >= 0, then already integer
         bpl     _FIExit
-        FloatTest32A                             ; zero, then integer
+        FloatTest32A                        ; zero, then integer
         beq     _FIExit
         jsr     FloatNormaliseA             ; Normalise FPA
 _FIConvert:     
-        lda     floatAExponent                   ; exponent sill negative ?
+        lda     floatAExponent              ; exponent sill negative ?
         bpl     _FIExit
-        FloatShr32A                          ; keep shifting right until exponent = 0
+        FloatShr32A                         ; keep shifting right until exponent = 0
         inc     floatAExponent
         bra     _FIConvert
 _FIExit:

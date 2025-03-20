@@ -20,9 +20,9 @@ FloatFractional:
         phx
         phy
         jsr     FloatNormaliseA             ; normalise FPA
-        stz     floatAFlags                      ; take absolute value of FPA
+        stz     floatAFlags                 ; take absolute value of FPA
 
-        lda     floatAExponent                   ; check exponent
+        lda     floatAExponent              ; check exponent
         bpl     _FFZero                     ; if >= 0 then return zero.
         cmp     #$E0+1                      ; if it is <= -32 ($E0) it is already fractional, e.g. $80...$E0 inclusive
         bcc     _FFExit
@@ -36,7 +36,7 @@ _FFStripBits:
         cpx     #8                          ; 8 or more bits to strip.      
         bcs     _FFStripByte                ; do a byte at a time.
 
-        lda     floatAMantissa,y                 ; do the final bit strip.
+        lda     floatAMantissa,y            ; do the final bit strip.
         and     _FFBitStrip,x
         sta     floatAMantissa,y
         bra     _FFExit                     ; and exit
@@ -52,7 +52,7 @@ _FFStripByte:
         bra     _FFStripBits                ; and go round again.
 
 _FFZero:
-        FloatClear32A                            ; return 0
+        FloatClear32A                       ; return 0
 _FFExit:
         ply                                 ; restore registers
         plx
