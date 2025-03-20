@@ -41,8 +41,12 @@ Boot:
 
 _testString:
         .text   '12346.17',0
-
+        ;
+        ;       Use one of the two depending on whether you want the multi-file version or the one file library.
+        ;
         .include "../../source/float.asm"
-        .include "__testdata.inc"
+;        .include "../../build/ifloat.library"
 
-		
+        .include "__testdata.inc"		
+
+        
