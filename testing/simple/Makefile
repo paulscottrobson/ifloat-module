@@ -3,7 +3,7 @@
 #
 #		Name : 		Makefile
 #		Purpose :	Very simple one off tests.
-#		Date :		9th December 2024
+#		Date :		20th March 2025
 #		Author : 	Paul Robson (paul@robsons.org.uk)
 #
 # *******************************************************************************************
@@ -11,7 +11,7 @@
 
 include ../../build_env/common.make
 
-n1 = 12.3
+n1 = 12.337
 n2 = 3.1
 
 check:

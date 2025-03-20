@@ -3,7 +3,7 @@
 ;
 ;		Name : 		start.asm
 ;		Purpose :	Test bed for ifloat code.
-;		Date :		9th December 2024
+;		Date :		20th March 2025
 ;		Author : 	Paul Robson (paul@robsons.org.uk)
 ;
 ; *******************************************************************************************
@@ -25,7 +25,7 @@ Boot:
 		dex
 		bpl 	-
 
-		jsr 	FloatMultiply
+		jsr 	FloatFractional
 
 		jmp 	$FFFF
 

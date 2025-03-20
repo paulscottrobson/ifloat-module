@@ -1,13 +1,12 @@
 # TODO List
 
-- divide
-- int
-- fractional
+## Conversion group
 - IntToStr
 - StrToInt
 - FloatToStr
 - StrToFloat
 
+## Polynomial group
 - Polynomial code (rig up temp,test depth)
 - Rig up better.
 

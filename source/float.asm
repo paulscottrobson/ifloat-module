@@ -3,7 +3,7 @@
 ;
 ;		Name : 		float.asm
 ;		Purpose :	Main program, also used to create module library
-;		Date :		9th December 2024
+;		Date :		20th March 2025
 ;		Author : 	Paul Robson (paul@robsons.org.uk)
 ;
 ; *******************************************************************************************
@@ -20,4 +20,7 @@
 
         .include "base/arithmetic/add.asm"
         .include "base/arithmetic/multiply.asm"
+        .include "base/arithmetic/divide.asm"
+        .include "base/arithmetic/integer.asm"
+        .include "base/arithmetic/fractional.asm"
 
