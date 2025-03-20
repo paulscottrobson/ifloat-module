@@ -12,7 +12,6 @@
 - Rename stuff.
 - Tidy up.
 - Outer call (needs to zero internal stack and the string size and data)
-- Float to string, strip trailing zero (leave one !)
 - Make one file, rewrite builder.py
 - Write a better test suite, though polynomials are pretty good.
 

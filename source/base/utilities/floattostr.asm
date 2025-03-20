@@ -57,7 +57,17 @@ _FFTSFracLoop:
         jsr     FloatAddCharacterToBuffer
         bra     _FFTSFracLoop               ; and go round again.
 
-_FFTSExit:      
+_FFTSExit:    
+        ldx     FloatBufferSize             ; check for trailing zero
+        lda     FloatBufferString-1,x       ; ends in a zero, but not .0
+        cmp     #"0"
+        bne     _FFTSNotTrailingZero
+        lda     FloatBufferString-2,x
+        cmp     #"."
+        beq     _FFTSNotTrailingZero
+        dec     FloatBufferSize             ; patch up.
+        stz     FloatBufferString-1,x
+_FFTSNotTrailingZero:
         ply
         plx
         pla
