@@ -40,16 +40,14 @@ PolyLogarithmE:
 		;
 		;		Add square root of 0.5
 		;
-		jsr 	PolyCopyFloatB 	
-		.word	FloatConst_Sqr0_5
+		PolyConstantToB 	FloatConst_Sqr0_5
 		jsr 	FloatAdd
 		;
 		;		Divide into -(square root of 2)
 		;
 		Push32A
 		Pop32B
-		jsr 	PolyCopyFloatA
-		.word	FloatConst_MinusSqr2
+        PolyConstantToA	    FloatConst_MinusSqr2
 		jsr 	FloatDivide
 		;
 		;		Add 1 (so calculating 1-root(2)/(x+root(0.5)))
@@ -69,8 +67,7 @@ PolyLogarithmE:
 		Set32B
 		jsr 	FloatAdd
 
-		jsr 	PolyCopyFloatB 				; multiply by Log(2)
-		.word	FloatConst_Log2
+		PolyConstantToB FloatConst_Log2 				; multiply by Log(2)
 		jsr 	FloatMultiply
 
 		clc

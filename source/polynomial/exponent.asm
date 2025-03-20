@@ -28,8 +28,7 @@ PolyExponent:
 		;
 		;		Multiply FPA by log2 e
 		;
-		jsr 	PolyCopyFloatB 				; multiply by log2 e
-		.word 	FloatConst_Log2_E
+		PolyConstantToB FloatConst_Log2_E			; multiply by log2 e
 		jsr 	FloatMultiply
 		;
 		;		Extract the integer part.

@@ -67,8 +67,7 @@ _PATNotAdjust:
 		lda 	aFlags 						; FPA = -FPA
 		eor 	#$80
 		sta 	aFlags
-		jsr 	PolyCopyFloatB 				; FPB = Pi/2
-		.word 	FloatConst_PiDiv2		
+		PolyConstantToB FLoatConst_PiDiv2		; FPB = Pi/2
 		jsr 	FloatAdd
 _PATNoFixup:		
 		;

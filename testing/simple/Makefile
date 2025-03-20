@@ -11,7 +11,7 @@
 
 include ../../build_env/common.make
 
-n1 = 1
+n1 = 2
 n2 = 3.1
 
 check:

@@ -117,4 +117,45 @@ PolyCopyFloatCommon:
 		stx 	zTemp0
 		rts		
 
-		
+PolyConstantToA .macro
+        lda     #\1-FloatConst_1Div2Pi
+        jsr     PolyConstantToACode
+        .endm
+
+PolyConstantToB .macro
+        lda     #\1-FloatConst_1Div2Pi
+        jsr     PolyConstantToBCode
+        .endm
+
+PolyConstantToACode:
+        phx
+        phy
+        tax
+        ldy     #0
+_PCACLoop:
+        lda     FloatConst_1Div2Pi,x
+        sta     aFlags,y
+        inx
+        iny
+        cpy     #6
+        bne     _PCACLoop
+        ply
+        plx
+        rts
+
+PolyConstantToBCode:
+        phx
+        phy
+        tax
+        ldy     #0
+_PCACLoop:
+        lda     FloatConst_1Div2Pi,x
+        sta     bFlags,y
+        inx
+        iny
+        cpy     #6
+        bne     _PCACLoop
+        ply
+        plx
+        rts
+

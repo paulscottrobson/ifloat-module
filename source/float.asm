@@ -36,6 +36,7 @@
         ;
         ;       Taylor series functions.
         ;
+        .include "polynomial/utility.asm"                
         .include "polynomial/__coefficients.asm"
         .include "polynomial/__constants.asm"        
         .include "polynomial/sinecosine.asm"                
@@ -44,5 +45,4 @@
         .include "polynomial/exponent.asm"                
         .include "polynomial/squareroot.asm"                
         .include "polynomial/arctangent.asm"                
-        .include "polynomial/utility.asm"                
 
