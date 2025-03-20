@@ -14,6 +14,15 @@ include ../build_env/common.make
 #
 #		This just test it builds, nothing else.
 #
-test:
+test: single
 	$(ASSEMBLER) $(ASMOPTIONS) fwrapper.asm $(ASMTARGETS)
-	echo "Assembles correctly"
+	echo "Multi file Assembles correctly"
+	$(ASSEMBLER) $(ASMOPTIONS) fwrapper2.asm $(ASMTARGETS)
+	echo "Single file Assembles correctly"
+
+#
+#		Build the single file version
+#	
+single:
+	$(PYTHON) $(SCRIPTDIR)builder.py >$(BUILDDIR)ifloat.library
+	echo "Build single file library"
