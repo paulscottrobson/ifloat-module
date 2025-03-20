@@ -64,11 +64,11 @@ class PolyCalculator(object):
 	def exportPolynomial(self,h,name,values):
 		h.write("\n;\n;\t Polynomial to evaluate {0}\n;\n".format(name))
 		h.write("Polynomial{0}Data:\n".format(name))
-		h.write("\t!byte\t{0}\n".format(len(values)))
+		h.write("\t.byte\t{0}\n".format(len(values)))
 		for v in values:
 			f = IFloat(v)
 			m = f.mantissa
-			h.write("\t!byte\t${0:02x},${1:02x},${2:02x},${3:02x},${4:02x},${5:02x} ; {6}\n".format(0x80 if f.isNegative else 0x00,f.exponent & 0xFF, 
+			h.write("\t.byte\t${0:02x},${1:02x},${2:02x},${3:02x},${4:02x},${5:02x} ; {6}\n".format(0x80 if f.isNegative else 0x00,f.exponent & 0xFF, 
 					m & 0xFF,(m >> 8) & 0xFF,(m >> 16) & 0xFF,(m >> 24) & 0xFF,v))
 
 PolyCalculator.polynomials = {}

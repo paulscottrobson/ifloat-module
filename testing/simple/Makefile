@@ -33,3 +33,6 @@ show:
 	$(PYTHON) $(SCRIPTDIR)show_string.py dump.bin 0x400
 
 run: test show
+
+data:
+	$(MAKE) -B -C $(SCRIPTDIR)
