@@ -11,10 +11,14 @@
 
 include ../../build_env/common.make
 
-n1 = 12.2
-n2 = 3.4
+n1 = 12.3
+n2 = 3.1
+
+check:
+	$(MAKE) -C $(SOURCEDIR) test
 
 test:
+	$(MAKE) -C $(SCRIPTDIR) build	
 	rm -f dump*.bin
 	$(PYTHON) $(SCRIPTDIR)generate_ifloat.py testdata1 $(n1) >__testdata.inc
 	$(PYTHON) $(SCRIPTDIR)generate_ifloat.py testdata2 $(n2) >>__testdata.inc
@@ -24,3 +28,5 @@ test:
 show:
 	$(PYTHON) $(SCRIPTDIR)show_ifloat.py dump.bin 0x20
 	$(PYTHON) $(SCRIPTDIR)show_ifloat.py dump.bin 0x26
+
+run: test show

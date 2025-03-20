@@ -25,7 +25,7 @@ Boot:
 		dex
 		bpl 	-
 
-		jsr 	FloatSubtract
+		jsr 	FloatMultiply
 
 		jmp 	$FFFF
 

@@ -19,4 +19,5 @@
 
 
         .include "base/arithmetic/add.asm"
+        .include "base/arithmetic/multiply.asm"
 

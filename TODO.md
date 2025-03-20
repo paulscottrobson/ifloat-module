@@ -1,6 +1,5 @@
 # TODO List
 
-- multiply
 - divide
 - int
 - fractional
