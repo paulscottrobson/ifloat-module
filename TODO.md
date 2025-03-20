@@ -1,7 +1,7 @@
 # TODO List
 
 ## Polynomial group
-- Polynomial code 
+- Fix PolyCopyFloatA/B
 - Test depth of push pop, Rig up better.
 
 ## Then

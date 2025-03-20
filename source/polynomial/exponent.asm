@@ -29,17 +29,17 @@ PolyExponent:
 		;		Multiply FPA by log2 e
 		;
 		jsr 	PolyCopyFloatB 				; multiply by log2 e
-		!word 	FloatConst_Log2_E
+		.word 	FloatConst_Log2_E
 		jsr 	FloatMultiply
 		;
 		;		Extract the integer part.
 		;
-		+Push32A 							; push FPA as we want it restored after this bit.
+		Push32A 							; push FPA as we want it restored after this bit.
 		jsr 	FloatInteger 				; take and save the integer part
 		lda 	aMantissa+0 			
-		sta 	PolyExponent
-		+Pop32B
-		+Copy32BA
+		sta 	PolyExponentTemp
+		Pop32B
+		Copy32BA
 		jsr 	FloatFractional 			; extract the fractional part
 		;
 		;		Handle -ve values in original FPA. Negate the exponent and the value for x
@@ -49,8 +49,8 @@ PolyExponent:
 
 		sec 								; negate the exponent
 		lda 	#0
-		sbc 	PolyExponent
-		sta 	PolyExponent
+		sbc 	PolyExponentTemp
+		sta 	PolyExponentTemp
 
 		lda 	#$80 						; make FPA negative
 		sta 	aFlags
@@ -65,7 +65,7 @@ _PENotNegative:
 		;		Add the exponent extracted earlier
 		;
 		clc
-		lda 	PolyExponent
+		lda 	PolyExponentTemp
 		adc 	aExponent
 		sta 	aExponent
 

@@ -57,7 +57,7 @@ polySign:
 		.fill 	1			
 polyFlag:
 		.fill 	1	
-polyExponent:
+PolyExponentTemp:
 		.fill 	1				
 
 rFlags:

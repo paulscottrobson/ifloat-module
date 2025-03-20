@@ -41,21 +41,21 @@ PolyLogarithmE:
 		;		Add square root of 0.5
 		;
 		jsr 	PolyCopyFloatB 	
-		!word	FloatConst_Sqr0_5
+		.word	FloatConst_Sqr0_5
 		jsr 	FloatAdd
 		;
 		;		Divide into -(square root of 2)
 		;
-		+Push32A
-		+Pop32B
+		Push32A
+		Pop32B
 		jsr 	PolyCopyFloatA
-		!word	FloatConst_MinusSqr2
+		.word	FloatConst_MinusSqr2
 		jsr 	FloatDivide
 		;
 		;		Add 1 (so calculating 1-root(2)/(x+root(0.5)))
 		;
 		lda 	#1
-		+Set32B
+		Set32B
 		jsr 	FloatAdd
 		;
 		;		Apply the polynomial
@@ -66,11 +66,11 @@ PolyLogarithmE:
 		;		Add the exponent offset
 		;
 		pla 								; Set A to the exponent offset.
-		+Set32B
+		Set32B
 		jsr 	FloatAdd
 
 		jsr 	PolyCopyFloatB 				; multiply by Log(2)
-		!word	FloatConst_Log2
+		.word	FloatConst_Log2
 		jsr 	FloatMultiply
 
 		clc

@@ -35,7 +35,7 @@ Boot:
         lda     #_testString >> 8
         sta     zTemp0+1
 
-		jsr 	FloatStringToFloat
+		jsr 	PolyArcTangent
 
 		jmp 	$FFFF
 

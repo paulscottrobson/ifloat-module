@@ -34,29 +34,29 @@ PolyArcTangent:
 		cmp 	#$E2 						; $E2..$FF are also > 1
 		bcc 	_PATNotAdjust
 _PATAdjust:		
-		+Push32A 							; copy FPA to FPB
-		+Pop32B
+		Push32A 							; copy FPA to FPB
+		Pop32B
 		lda 	#1 							; FPA = 1, FPB = x
-		+Set32A
+		Set32A
 		jsr 	FloatDivide 				; take reciprocal
 		inc 	polyFlag 					; set the adjust flag
 _PATNotAdjust:		
 		;
 		; 		Save FPA for end multiply 
 		;
-		+Push32A 							; save FPA
+		Push32A 							; save FPA
 		;
 		;		Calculate FPA^2
 		;
-		+Push32A 							; square FPA - copy to FPB (slowly) and multiply
-		+Pop32B
+		Push32A 							; square FPA - copy to FPB (slowly) and multiply
+		Pop32B
 		jsr 	FloatMultiply 				
 		;
 		;		Apply the polynomial and multiply by the saved value.
 		;
 		ldx 	#PolynomialArctanData-PolynomialData
 		jsr 	PolyEvaluate
-		+Pop32B 							; now multiply by the original value
+		Pop32B 							; now multiply by the original value
 		jsr 	FloatMultiply 				
 		;
 		;		If adjusted subtract result from Pi/2
@@ -68,7 +68,7 @@ _PATNotAdjust:
 		eor 	#$80
 		sta 	aFlags
 		jsr 	PolyCopyFloatB 				; FPB = Pi/2
-		!word 	FloatConst_PiDiv2		
+		.word 	FloatConst_PiDiv2		
 		jsr 	FloatAdd
 _PATNoFixup:		
 		;

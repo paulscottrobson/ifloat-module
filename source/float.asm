@@ -38,3 +38,11 @@
         ;
         .include "polynomial/__coefficients.asm"
         .include "polynomial/__constants.asm"        
+        .include "polynomial/sinecosine.asm"                
+        .include "polynomial/tangent.asm"                
+        .include "polynomial/logarithm.asm"                
+        .include "polynomial/exponent.asm"                
+        .include "polynomial/squareroot.asm"                
+        .include "polynomial/arctangent.asm"                
+        .include "polynomial/utility.asm"                
+
