@@ -19,8 +19,7 @@ PolyCosine:
 		pha
 		phx
 		phy
-		jsr 	PolyCopyFloatB 				; add Pi/2
-		.word 	FloatConst_PiDiv2		
+		PolyConstantToB FloatConst_PiDiv2	; add Pi/2
 		jsr 	FloatAdd  					
 		jsr 	PolySine 					; calculate sin(x+pi/2)
 		ply
@@ -45,8 +44,7 @@ PolySine:
 		;
 		;		Divide FPA by 2.Pi and take fractional part, forcing result into the '360' range
 		;
-		jsr 	PolyCopyFloatB 				; multiply by 1 / (2.Pi) (e.g. divide by 2.Pi)
-		.word	FloatConst_1Div2Pi
+		PolyConstantToB FloatConst_1Div2Pi 	; multiply by 1 / (2.Pi) (e.g. divide by 2.Pi)
 		jsr 	FloatMultiply
 		jsr 	FloatFractional 			; take the fractional part.
 		;
