@@ -21,7 +21,7 @@ FloatStringToInt:
 		phx
 		phy
 
-		Clear32A 							; set the F{A register to zero.
+		FloatClear32A 							; set the F{A register to zero.
 		ldy 	#0 							; start from here.
 _FSILoop:	
 		FloatLoadIY floatZ0 					; get next character
@@ -31,12 +31,12 @@ _FSILoop:
 		bcs 	_FSIExit	
 
 		lda 	#10 						; multiply FPA by 10
-		Set32B
+		FloatSet32B
 		jsr 	FloatMultiply
 		FloatLoadIY floatZ0 					; add number.
 		iny
 		and 	#$0F
-		Set32B
+		FloatSet32B
 		jsr 	FloatAdd  					
 		lda 	floatAExponent 					; check still an integer.
 		beq 	_FSILoop

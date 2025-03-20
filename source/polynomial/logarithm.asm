@@ -45,15 +45,15 @@ PolyLogarithmE:
 		;
 		;		Divide into -(square root of 2)
 		;
-		Push32A
-		Pop32B
+		FloatPush32A
+		FloatPop32B
         PolyConstantToA	    FloatConst_MinusSqr2
 		jsr 	FloatDivide
 		;
 		;		Add 1 (so calculating 1-root(2)/(x+root(0.5)))
 		;
 		lda 	#1
-		Set32B
+		FloatSet32B
 		jsr 	FloatAdd
 		;
 		;		Apply the polynomial
@@ -64,7 +64,7 @@ PolyLogarithmE:
 		;		Add the exponent offset
 		;
 		pla 								; Set A to the exponent offset.
-		Set32B
+		FloatSet32B
 		jsr 	FloatAdd
 
 		PolyConstantToB FloatConst_Log2 				; multiply by Log(2)

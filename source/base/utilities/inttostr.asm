@@ -51,11 +51,11 @@ _FITSPositive:
 
 _FITSRecursive:
         lda     floatBaseConvert                 ; divide by the base, put in B
-        Set32B                      
+        FloatSet32B                      
         jsr     FloatIntDivide              ; integer division.
         lda     floatModulusLowByte              ; get the low byte, the remainder and save it.
         pha
-        Test32A                             ; zero ?
+        FloatTest32A                             ; zero ?
         beq     _FITSZero
         jsr     _FITSRecursive              ; if not, keep going.
 _FITSZero:
@@ -72,7 +72,7 @@ _FITSNotHex:
 
 ; *******************************************************************************************
 ;
-;                   Add Character to Buffer (also used by FloatFloatToString)
+;                   Add Character to Buffer (also used by FloatToString)
 ;
 ; *******************************************************************************************
 

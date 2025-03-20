@@ -33,12 +33,12 @@ PolyExponent:
 		;
 		;		Extract the integer part.
 		;
-		Push32A 							; push FPA as we want it restored after this bit.
+		FloatPush32A 							; push FPA as we want it restored after this bit.
 		jsr 	FloatInteger 				; take and save the integer part
 		lda 	floatAMantissa+0 			
 		sta 	polyExponentTemp
-		Pop32B
-		Copy32BA
+		FloatPop32B
+		FloatCopy32BA
 		jsr 	FloatFractional 			; extract the fractional part
 		;
 		;		Handle -ve values in original FPA. Negate the exponent and the value for x

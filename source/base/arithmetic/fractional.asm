@@ -52,7 +52,7 @@ _FFStripByte:
         bra     _FFStripBits                ; and go round again.
 
 _FFZero:
-        Clear32A                            ; return 0
+        FloatClear32A                            ; return 0
 _FFExit:
         ply                                 ; restore registers
         plx

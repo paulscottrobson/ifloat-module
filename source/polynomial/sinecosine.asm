@@ -52,7 +52,7 @@ PolySine:
 		;
 		inc 	floatAExponent 					; x 2
 		inc 	floatAExponent 					; x 4
-		Push32A 							; save this value
+		FloatPush32A 							; save this value
 		jsr 	FloatInteger
 		lda 	floatAMantissa+0 				; get the quadrant.
 		pha 								; save for later
@@ -65,8 +65,8 @@ _PSNotQ23:
 		;
 		;		Work out the fractional part and adjust for quadrants 1 & 3
 		;
-		Pop32B 							; get the 4 x value back to B
-		Copy32BA							; copy to A. 
+		FloatPop32B 							; get the 4 x value back to B
+		FloatCopy32BA							; copy to A. 
 		jsr 	FloatFractional 			; fractional part, not quadrant
 		pla 								; restore the quadrant
 		and 	#1 							; is it quadrant 1 or 3
@@ -74,18 +74,18 @@ _PSNotQ23:
 		lda 	#$80 						; make FPA -x (calculating 1-x)
 		sta 	floatAFlags
 		lda 	#1 							; B = 1, so -x + 1 being done here.
-		Set32B
+		FloatSet32B
 		jsr 	FloatAdd
 _PSNotQ13:		
 		;
 		; 		Save FPA for end multiply 
 		;
-		Push32A 							; save FPA
+		FloatPush32A 							; save FPA
 		;
 		;		Calculate FPA^2
 		;
-		Push32A 							; square FPA - copy to FPB (slowly) and multiply
-		Pop32B
+		FloatPush32A 							; square FPA - copy to FPB (slowly) and multiply
+		FloatPop32B
 		jsr 	FloatMultiply 				
 
 		;
@@ -93,7 +93,7 @@ _PSNotQ13:
 		;
 		ldx 	#PolynomialSineData-PolynomialData
 		jsr 	PolyEvaluate
-		Pop32B 							; now multiply by the original value
+		FloatPop32B 							; now multiply by the original value
 		jsr 	FloatMultiply 				
 
 		lda 	polySign 					; get original sign

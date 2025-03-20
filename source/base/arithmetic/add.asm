@@ -39,11 +39,11 @@ FloatAdd:
         ;
         ;       Check zero.
         ;
-        Test32B                            ; check if FPB = 0
+        FloatTest32B                            ; check if FPB = 0
         beq     _FAExit                     ; if so, just return FPA.
-        Test32A                            ; check if FPA = 0
+        FloatTest32A                            ; check if FPA = 0
         bne     _FAFloatingPoint            ; if not, then do FP addition.
-        Copy32BA                           ; copy FPB to FPA
+        FloatCopy32BA                           ; copy FPB to FPA
         bra     _FAExit                     ; and exit
         ;
         ;       Floating point add/subtract
@@ -69,7 +69,7 @@ _FAFloatingPoint:
 -       cpx     floatAExponent                   ; reached required exponent (FPA)
         beq     +
         phx
-        Shr32A                             ; shift right and adjust exponent, preserving the target
+        FloatShr32A                             ; shift right and adjust exponent, preserving the target
         plx
         inc     floatAExponent
         bra     -
@@ -80,7 +80,7 @@ _FAFloatingPoint:
 -       cpx     floatBExponent                   ; reached required exponent (FPB)
         beq     +
         phx
-        Shr32B                             ; shift right and adjust exponent, preserving the target
+        FloatShr32B                             ; shift right and adjust exponent, preserving the target
         plx
         inc     floatBExponent
         bra     -
@@ -96,18 +96,18 @@ _FAAddition:
         ;
         ;       Integer arithmetic : Addition
         ;
-        Add32AB                            ; add FPB to FPA - sign of result is inherited.
+        FloatAdd32AB                            ; add FPB to FPA - sign of result is inherited.
         bpl     _FAExit                     ; no overflow, bit 31 of mantissa clear.
-        Shr32A                             ; fix up the mantissa
+        FloatShr32A                             ; fix up the mantissa
         inc     floatAExponent                   ; bump the exponent
         bra     _FAExit                     ; and quit.
         ;
         ;       Integer arithmetic : Subtraction
         ;   
 _FASubtraction:
-        Sub32AB                            ; subtract FPB from FPA
+        FloatSub32AB                            ; subtract FPB from FPA
         bpl     _FAExit                     ; no underflow, then exit.
-        Neg32A                             ; negate FPA mantissa 
+        FloatNeg32A                             ; negate FPA mantissa 
         lda     floatAFlags                      ; toggle the sign flag
         eor     #$80
         sta     floatAFlags
@@ -131,7 +131,7 @@ _FAExit:
 FloatCheckMinusZero:
         lda     floatAFlags                      ; slight increase as mostly +ve
         bpl     _FCMZExit
-        Test32A                            ; if a zero mantissa
+        FloatTest32A                            ; if a zero mantissa
         bne     _FCMZExit
         lda     floatAFlags                      ; clear the sign bit
         and     #$7F
@@ -146,26 +146,26 @@ _FCMZExit:
 ; *******************************************************************************************
 
 FloatNormaliseA:
-        Test32A                            ; check FPA zero
+        FloatTest32A                            ; check FPA zero
         beq     _NAExit     
 -
         lda     floatAMantissa+3                 ; check normalised
         and     #$40
         bne     _NAExit     
-        Shl32A
+        FloatShl32A
         dec     floatAExponent
         bra     -
 _NAExit:
         rts             
         
 FloatNormaliseB:
-        Test32B                            ; check FPB zero
+        FloatTest32B                            ; check FPB zero
         beq     _NBExit
 -
         lda     floatBMantissa+3                 ; check normalised
         and     #$40
         bne     _NBExit     
-        Shl32B
+        FloatShl32B
         dec     floatBExponent
         bra     -
 _NBExit:

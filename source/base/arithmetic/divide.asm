@@ -23,7 +23,7 @@ FloatDivide:
         ;
         ;       Check division by zero.
         ;
-        Test32B                             ; check if FPB = 0
+        FloatTest32B                             ; check if FPB = 0
         bne     _FMFDivide                  ; if not, do divide
         ply                                 ; restore registers
         plx
@@ -49,7 +49,7 @@ _FMFDivide:
         pha
 
         jsr     _FFDMain                    ; the main float division routine
-        Copy32RA                            ; FPA := FPR
+        FloatCopy32RA                            ; FPA := FPR
 
         pla                                 ; restore exponent.
         sta     floatAExponent           
@@ -102,7 +102,7 @@ FloatIntDivide:                             ; it's integer division in the Float
         ;
         ;       Check division by zero.
         ;
-        Test32B                             ; check if FPB = 0
+        FloatTest32B                             ; check if FPB = 0
         bne     _FMDivide                   ; if not, do divide code
         ply                                 ; restore registers
         plx
@@ -119,7 +119,7 @@ _FMDivide:
         jsr     _FIDMain                    ; the main integer division routine
         lda     floatAMantissa                   ; save the LSB of the remainder for later
         sta     floatModulusLowByte      
-        Copy32RA                            ; FPA := FPR
+        FloatCopy32RA                            ; FPA := FPR
         pla                                 ; restore sign.
         and     #$7F
         sta     floatAFlags
@@ -134,8 +134,8 @@ _FMDivide:
 ;       Main integer division routine.
 ;
 _FIDMain:
-        Copy32AR                            ; FPR := FPA
-        Clear32A                            ; FPA := 0
+        FloatCopy32AR                            ; FPR := FPA
+        FloatClear32A                            ; FPA := 0
         lda     #32                         ; Main loop counter
 _FIDLoop:
         pha                                 ; save counter.
@@ -173,9 +173,9 @@ FloatDivShiftARLeft:
 ; *******************************************************************************************
 
 FloatDivTrySubtract:
-        Sub32AB                             ; subtract FPB from FPA
+        FloatSub32AB                             ; subtract FPB from FPA
         bcs     _FDTSExit                   ; it worked okay.
-        Add32AB                             ; failed, so add it back
+        FloatAdd32AB                             ; failed, so add it back
         clc                                 ; carry must be clear.
 _FDTSExit:
         rts     

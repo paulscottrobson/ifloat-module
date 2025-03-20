@@ -28,7 +28,7 @@ _PECopy1:
 		dey 
 		bpl 	_PECopy1
 
-		Clear32A 							; set FPA to zero.
+		FloatClear32A 							; set FPA to zero.
 
 _PEEvaluateLoop:		
 		ldy 	#5 							; copy X back to FPB
