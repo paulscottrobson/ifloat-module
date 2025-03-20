@@ -40,7 +40,7 @@ _FSCCopy:
 		bra 	_FSCExit
 
 _FSCZero:
-		+Clear32A 							; set the FPA register to zero.
+		Clear32A 							; set the FPA register to zero.
 _FSCExit:		
 		ply 								; restore registers
 		plx

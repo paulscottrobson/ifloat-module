@@ -26,3 +26,7 @@
 
         .include "base/utilities/inttostr.asm"
         .include "base/utilities/floattostr.asm"
+        .include "base/utilities/strtoint.asm"
+        .include "base/utilities/strtofloat.asm"
+        .include "base/utilities/scale10.asm"
+        .include "base/utilities/__scalars.asm"

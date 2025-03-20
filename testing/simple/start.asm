@@ -30,9 +30,17 @@ Boot:
         lda     #"?"
         sta     FloatBufferString
 
-		jsr 	FloatFloatToString
+        lda     #_testString & $FF
+        sta     zTemp0
+        lda     #_testString >> 8
+        sta     zTemp0+1
+
+		jsr 	FloatStringToFloat
 
 		jmp 	$FFFF
+
+_testString:
+        .text   '12346.17',0
 
         .include "../../source/float.asm"
         .include "__testdata.inc"

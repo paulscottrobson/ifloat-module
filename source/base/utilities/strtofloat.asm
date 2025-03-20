@@ -23,6 +23,7 @@ FloatStringToFloat:
 		;
 		;		Process possible preceding '-'
 		;
+        ldy     #0
 		lda 	(zTemp0) 					; get, and push, the first character.
 		eor 	#"-"						; will be $00 if it is '-', non zero otherwise
 		beq 	_FSTFNoFlip
@@ -31,23 +32,22 @@ _FSTFNoFlip:
 		eor 	#$80 						; now a sign bit.
 		pha 								; save it.
 		beq 	_FSTFNoMinus 				; if was +ve don't bump
-		inc 	zTemp0  					; if it was '-' advance the pointer.
-		bne 	_FSTFNoMinus				
-		inc 	zTemp0+1
+        lda     #1
+        jsr     _FSTFAddToPointer
 _FSTFNoMinus:
 		;
 		;		The integer part, if there is one.
 		;
-		+Clear32A 							; zero FPA
+		Clear32A 							; zero FPA
 		ldy 	#1 							; this is the amount to skip if decimal.
-		lda 	(zTemp0) 					; is it '.xxxxx' VAL(".12") => 0.12
+		FloatLoadI zTemp0					; is it '.xxxxx' VAL(".12") => 0.12
 		cmp 	#"."						; if so, convert to decimal.
 		beq 	_FSTFDecimalPart
 
 		jsr 	FloatStringToInt 	 		; get the integer part first.
 		bcs 	_FSTFExit 					; bad number.
 		tay 								; count of characters in Y
-		lda 	(zTemp0),y 					; what follows is '.'
+		FloatLoadIY zTemp0 					; what follows is '.'
 		cmp 	#'.' 						; if not, then exit with a whole number and carry clear
 		bne 	_FSTFExitOkay
 		iny
@@ -56,22 +56,17 @@ _FSTFNoMinus:
 		;
 _FSTFDecimalPart:
 		tya 								; point zTemp0 to post decimal point bit.
-		clc
-		adc 	zTemp0
-		sta 	zTemp0
-		bcc 	_FSTFNoCarry
-		inc 	zTemp0+1
-_FSTFNoCarry:		
-		lda 	(zTemp0) 					; character following, if illegal just ignore it.
+        jsr     _FSTFAddToPointer
+		FloatLoadI zTemp0 					; character following, if illegal just ignore it.
 		cmp 	#'0' 						; VAL("12.") => 12
 		bcc 	_FSTFExitOkay
 		cmp 	#'9'+1
 		bcs 	_FSTFExitOkay
-		+Push32A 							; push FPA on the stack.
+		Push32A 							; push FPA on the stack.
 		jsr 	FloatStringToInt 			; get the Decimal Point bit, divisor is in A
 		bcs 	_FSTFExit 					; bad number.
 		jsr 	FloatScale10 				; divide by 10^A
-		+Pop32B 				 			; FPA is fractional part, FPB integer part
+		Pop32B 				 			    ; FPA is fractional part, FPB integer part
 		jsr 	FloatAdd 					; add them together.
 _FSTFExitOkay:
 		pla 								; get flags
@@ -83,3 +78,19 @@ _FSTFExit:
 		pla
 		rts				
 
+; *******************************************************************************************
+;
+;                       Add A to the pointer, supports 6502 and 65816
+;
+; *******************************************************************************************
+
+_FSTFAddToPointer:
+        clc
+        adc     zTemp0
+        sta     zTemp0
+        bcc     _FSTFNoCarry
+        inc     zTemp0+1
+        bne     _FSTFNoCarry
+        inc     zTemp0+2
+_FSTFNoCarry:       
+        rts

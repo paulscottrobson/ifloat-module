@@ -21,22 +21,22 @@ FloatStringToInt:
 		phx
 		phy
 
-		+Clear32A 							; set the F{A register to zero.
+		Clear32A 							; set the F{A register to zero.
 		ldy 	#0 							; start from here.
 _FSILoop:	
-		lda 	(zTemp0),y 					; get next character
+		FloatLoadIY zTemp0 					; get next character
 		cmp 	#'0'						; check validity
 		bcc 	_FSIExit
 		cmp 	#'9'+1
 		bcs 	_FSIExit	
 
 		lda 	#10 						; multiply FPA by 10
-		+Set32B
+		Set32B
 		jsr 	FloatMultiply
-		lda 	(zTemp0),y 					; add number.
+		FloatLoadIY zTemp0 					; add number.
 		iny
 		and 	#$0F
-		+Set32B
+		Set32B
 		jsr 	FloatAdd  					
 		lda 	aExponent 					; check still an integer.
 		beq 	_FSILoop
