@@ -235,7 +235,14 @@ FloatTest32R6502:
 ;
 ; -------------------------------------------------------------------------------------------
 FloatPush32A6502:
-        FPAPushCode
+        ldy     ftStackPointer
+        ldx     #5
+_FPLoop:lda     aFlags,x
+        sta     ftStack,y
+        iny
+        dex
+        bpl     _FPLoop
+        sty     ftStackPointer        
         rts
 
 ; -------------------------------------------------------------------------------------------
@@ -245,6 +252,14 @@ FloatPush32A6502:
 ; -------------------------------------------------------------------------------------------
 
 FloatPop32B6502:
-        FPBPopCode
+        ldy     ftStackPointer
+        ldx     #0
+_FPLoop:dey
+        lda     ftStack,y
+        sta     bFlags,x
+        inx
+        cpx     #6
+        bne     _FPLoop        
+        sty     ftStackPointer        
         rts
 

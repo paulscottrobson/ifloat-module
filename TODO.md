@@ -1,10 +1,8 @@
 # TODO List
 
 ## Conversion group
-- Write Push & Pop code [quick working version]
-- FloatToStr test
 - StrToInt          [needs converting for 65816 via macros ld [],y]
-- StrToFloat
+- StrToFloat         [needs converting for 65816 via macros ld [],y]
 
 ## Polynomial group
 - Polynomial code 
@@ -13,5 +11,8 @@
 ## Then
 - Rename stuff.
 - Tidy up.
+- Outer call (needs to zero internal stack and the string size and data)
+- Float to string, strip trailing zero (leave one !)
+- Make one file, rewrite builder.py
 - Write a better test suite, though polynomials are pretty good.
 

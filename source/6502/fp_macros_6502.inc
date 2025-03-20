@@ -185,9 +185,6 @@ Push32A .macro
         jsr     FloatPush32A6502
 	   .endm
 
-FPAPushCode .macro
-	.endm
-
 ; -------------------------------------------------------------------------------------------
 ;
 ;                                   Pop B off the stack
@@ -195,7 +192,5 @@ FPAPushCode .macro
 ; -------------------------------------------------------------------------------------------
 Pop32B .macro     
         jsr     FloatPop32B6502
-	.endm
+	   .endm
 
-FPBPopCode .macro
-	.endm
