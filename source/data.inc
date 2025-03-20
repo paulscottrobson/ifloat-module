@@ -32,8 +32,9 @@ bExponent:
 		.fill 	1
 bMantissa:
 		.fill 	4
+        
 zTemp0:			
-		.fill	2
+		.fill	3
 
 ; *******************************************************************************************
 ;
@@ -43,10 +44,10 @@ zTemp0:
 
 		* = dataSpace 
 
-convBufferSize:
+FloatBufferSize:
 		.fill 	1
-convBufferString:
-		.fill 	16
+FloatBufferString:
+		.fill 	33
 
 polyCoefficientCount:
 		.fill 	1

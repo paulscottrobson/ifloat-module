@@ -25,7 +25,12 @@ Boot:
 		dex
 		bpl 	-
 
-		jsr 	FloatFractional
+        lda     #1
+        sta     FloatBufferSize
+        lda     #"?"
+        sta     FloatBufferString
+
+		jsr 	FloatFloatToString
 
 		jmp 	$FFFF
 

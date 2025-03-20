@@ -34,8 +34,8 @@ FloatIntegerToString:
 		phy
 		sta 	baseConvert 				; save the base to convert
 
-		stz 	convBufferSize 				; clear the buffer, both NULL terminated and length prefixed.
-		stz 	convBufferString
+		stz 	floatBufferSize 				; clear the buffer, both NULL terminated and length prefixed.
+		stz 	floatBufferString
 
 		bit 	aFlags 						; -ve ?
 		bpl 	_FITSPositive
@@ -51,11 +51,11 @@ _FITSPositive:
 
 _FITSRecursive:
 		lda 	baseConvert 				; divide by the base, put in B
-		+Set32B 						
+		Set32B 						
 		jsr 	FloatIntDivide  			; integer division.
 		lda 	modulusLowByte 				; get the low byte, the remainder and save it.
 		pha
-		+Test32A 							; zero ?
+		Test32A 							; zero ?
 		beq 	_FITSZero
 		jsr 	_FITSRecursive 				; if not, keep going.
 _FITSZero:
@@ -78,9 +78,9 @@ _FITSNotHex:
 
 FloatAddCharacterToBuffer:
 		phx
-		ldx 	convBufferSize 				; current size
-		sta 	convBufferString,x 			; write character out
-		stz 	convBufferString+1,x 		; make ASCIIZ
-		inc 	convBufferSize 				; bump character count
+		ldx 	floatBufferSize 				; current size
+		sta 	floatBufferString,x 			; write character out
+		stz 	floatBufferString+1,x 		; make ASCIIZ
+		inc 	floatBufferSize 				; bump character count
 		plx
 		rts

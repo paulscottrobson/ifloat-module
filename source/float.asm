@@ -24,3 +24,5 @@
         .include "base/arithmetic/integer.asm"
         .include "base/arithmetic/fractional.asm"
 
+        .include "base/utilities/inttostr.asm"
+        .include "base/utilities/floattostr.asm"

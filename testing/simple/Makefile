@@ -11,7 +11,7 @@
 
 include ../../build_env/common.make
 
-n1 = 12.337
+n1 = 123.375
 n2 = 3.1
 
 check:
@@ -28,5 +28,6 @@ test:
 show:
 	$(PYTHON) $(SCRIPTDIR)show_ifloat.py dump.bin 0x20
 	$(PYTHON) $(SCRIPTDIR)show_ifloat.py dump.bin 0x26
+	$(PYTHON) $(SCRIPTDIR)show_string.py dump.bin 0x400
 
 run: test show
