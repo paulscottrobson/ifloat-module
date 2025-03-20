@@ -32,20 +32,8 @@ bExponent:
 		.fill 	1
 bMantissa:
 		.fill 	4
-
-
 zTemp0:			
 		.fill	2
-
-zTemp1:			
-		.fill	2
-
-zTemp2:			
-		.fill	2
-
-;pageTemp:
-;		.fill 	1
-
 
 ; *******************************************************************************************
 ;
