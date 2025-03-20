@@ -1,63 +1,63 @@
 ; *******************************************************************************************
 ; *******************************************************************************************
 ;
-;		Name : 		utility.asm
-;		Purpose :	Utility polynomial functions
-;		Date :		20th March 2025
-;		Author : 	Paul Robson (paul@robsons.org.uk)
+;       Name :      utility.asm
+;       Purpose :   Utility polynomial functions
+;       Date :      20th March 2025
+;       Author :    Paul Robson (paul@robsons.org.uk)
 ;
 ; *******************************************************************************************
 ; *******************************************************************************************
 
 ; *******************************************************************************************
 ;
-;			Evaluate polynomial at offset X from PolynomialData using value in FPA
-;										(Horner's method)
+;           Evaluate polynomial at offset X from PolynomialData using value in FPA
+;                                       (Horner's method)
 ;
 ; *******************************************************************************************
 
 PolyEvaluate:
-		lda 	PolynomialData,x 			; get the number to do
-		inx  								; point to first number.
-		sta 	polyCoefficientCount 		; count of numbers
+        lda     PolynomialData,x            ; get the number to do
+        inx                                 ; point to first number.
+        sta     polyCoefficientCount        ; count of numbers
 
-		ldy 	#5 							; copy poly x to workspace
+        ldy     #5                          ; copy poly x to workspace
 _PECopy1:
-		lda 	floatAFlags,y
-		sta 	polyTempFloat,y
-		dey 
-		bpl 	_PECopy1
+        lda     floatAFlags,y
+        sta     polyTempFloat,y
+        dey 
+        bpl     _PECopy1
 
-		FloatClear32A 							; set FPA to zero.
+        FloatClear32A                       ; set FPA to zero.
 
-_PEEvaluateLoop:		
-		ldy 	#5 							; copy X back to FPB
+_PEEvaluateLoop:        
+        ldy     #5                          ; copy X back to FPB
 _PECopy2:
-		lda 	polyTempFloat,y
-		sta 	floatBFlags,y
-		dey 
-		bpl 	_PECopy2
-		jsr 	FloatMultiply 				; and multiply into FPA
+        lda     polyTempFloat,y
+        sta     floatBFlags,y
+        dey 
+        bpl     _PECopy2
+        jsr     FloatMultiply               ; and multiply into FPA
 
-		ldy 	#0 							; copy the next coefficient into FPB
+        ldy     #0                          ; copy the next coefficient into FPB
 _PECopy3:
-		lda 	PolynomialData,x
-		sta 	floatBFlags,y
-		inx		
-		iny
-		cpy 	#6
-		bne 	_PECopy3
+        lda     PolynomialData,x
+        sta     floatBFlags,y
+        inx     
+        iny
+        cpy     #6
+        bne     _PECopy3
 
-		jsr 	FloatAdd 					; and add into FPB
+        jsr     FloatAdd                    ; and add into FPB
 
-		dec 	polyCoefficientCount 		; do for all coefficients
-		bne 	_PEEvaluateLoop
+        dec     polyCoefficientCount        ; do for all coefficients
+        bne     _PEEvaluateLoop
 
-		rts
+        rts
 
 ; *******************************************************************************************
 ;
-;						Load Floating Point value, address following to FPA/FPB.
+;                       Load Floating Point value, address following to FPA/FPB.
 ;
 ; *******************************************************************************************
 
