@@ -17,13 +17,15 @@ n2 = 3.1
 check:
 	$(MAKE) -C $(SOURCEDIR) test
 
-test:
+test: assemble
+	$(RUNEMULATOR)
+
+assemble:
 	$(MAKE) -C $(SCRIPTDIR) build	
 	rm -f dump*.bin
 	$(PYTHON) $(SCRIPTDIR)generate_ifloat.py testdata1 $(n1) >__testdata.inc
 	$(PYTHON) $(SCRIPTDIR)generate_ifloat.py testdata2 $(n2) >>__testdata.inc
 	$(ASSEMBLER) $(ASMOPTIONS) start.asm $(ASMTARGETS)
-	$(RUNEMULATOR)
 
 show:
 	$(PYTHON) $(SCRIPTDIR)show_ifloat.py dump.bin 0x20
