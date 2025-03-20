@@ -333,5 +333,5 @@ if __name__ == "__main__":
 	TangentCalculator().calculate(1.0)
 	ArcTanCalculator().calculate(1.0)
 
-	LogCalculator().export("coefficients.acme")
+	LogCalculator().export("coefficients.data")
 

@@ -9,49 +9,27 @@
 ; *******************************************************************************************
 ; *******************************************************************************************
 
+        zeroPageSpace = $20
+        dataSpace = $400
+        codeSpace = $1000
+
+        * = codeSpace
+
 Boot:
 		ldx 	#$FF
 		txs
 
 		ldx 	#11 						; copy in test data.
--:		lda 	test_float,x
+-		lda 	testdata1,x
 		sta 	aFlags,x
 		dex
 		bpl 	-
 
-		stz 	exprStackPtr 				; clear out expression stack.
-		stz 	convBufferSize
-
-		;jsr 	FloatAdd	
-		;jsr 	FloatSubtract
-		;jsr 	FloatMultiply
-		;jsr 	FloatIntDivide
-		;jsr 	FloatDivide
-		;jsr 	FloatInteger
-		;jsr 	FloatFractional		
-
-		;jsr 	PolySine
-		;jsr 	PolyCosine
-		;jsr 	PolyTangent
-		;jsr 	PolyArcTangent
-		;jsr 	PolyExponent
-
-		;jsr 	PolyLogarithmE
-		jsr 	PolySquareRoot 
-
-		;jsr 	FloatFloatToString
-
-		;lda 	#testString & $FF
-		;sta 	zTemp0
-		;lda 	#testString >> 8
-		;sta 	zTemp0+1
-		;jsr 	FloatStringToFloat
+		jsr 	FloatSubtract
 
 		jmp 	$FFFF
 
-testString:
-		!text 	"32766.127Z"
-
-
+        .include "../../source/float.asm"
+        .include "__testdata.inc"
 
 		

@@ -1,16 +1,22 @@
 ; *******************************************************************************************
 ; *******************************************************************************************
 ;
-;		Name : 		00boot.asm
-;		Purpose :	Boot up Commander X16
-;		Date :		10th December 2024
+;		Name : 		float.asm
+;		Purpose :	Main program, also used to create module library
+;		Date :		9th December 2024
 ;		Author : 	Paul Robson (paul@robsons.org.uk)
 ;
 ; *******************************************************************************************
 ; *******************************************************************************************
 
-		* = programStart
+        .include "data.inc"
 
-		!byte $0b,$08,$01,$00,$9e,$32,$30,$36,$31,$00,$00,$00  			; SYS 2061 header.
+        .include "6502/fp_macros_6502.inc"
+        .include "6502/fp_utility_6502.asm"        
 
-		jmp 	Boot
+        .include "65816/fp_macros_65816.inc"
+        .include "65816/fp_utility_65816.asm"        
+
+
+        .include "base/arithmetic/add.asm"
+

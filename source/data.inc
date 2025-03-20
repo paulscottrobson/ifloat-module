@@ -1,36 +1,87 @@
 ; *******************************************************************************************
 ; *******************************************************************************************
 ;
-;		Name : 		config.inc
-;		Purpose :	Configuration File (Commander X16)
+;		Name : 		data.inc
+;		Purpose :	Data files
 ;		Date :		9th December 2024
 ;		Author : 	Paul Robson (paul@robsons.org.uk)
 ;
 ; *******************************************************************************************
 ; *******************************************************************************************
 
-; *******************************************************************************************
-;
-;			  This flag when non-zero puts the math register into zero page
-;
-; *******************************************************************************************
-
-		mathInZeroPage = 1
+FloatCode = *
 
 ; *******************************************************************************************
 ;
-;			  			The size of the expression evaluation stack
+;	                                  Zero Page Usage
 ;
 ; *******************************************************************************************
 
-		exprStackSize = 8
+        * = zeroPageSpace
+
+aFlags:
+		.fill 	1
+aExponent:		
+		.fill 	1
+aMantissa:
+		.fill 	4
+
+bFlags:
+		.fill 	1
+bExponent:		
+		.fill 	1
+bMantissa:
+		.fill 	4
+
+
+zTemp0:			
+		.fill	2
+
+zTemp1:			
+		.fill	2
+
+zTemp2:			
+		.fill	2
+
+;pageTemp:
+;		.fill 	1
+
 
 ; *******************************************************************************************
 ;
-;									Setup (Commander X16)
+;								Non-Zero page data space
 ;
 ; *******************************************************************************************
 
-		zeroPageSpace = $22  											; X16 allows $22-$7F usage
-		dataSpace = $400 												; $400-$7FF is available for machine code usage.
-		programStart = $801   											; Build to $801
+		* = dataSpace 
+
+convBufferSize:
+		.fill 	1
+convBufferString:
+		.fill 	16
+
+polyCoefficientCount:
+		.fill 	1
+polyTempFloat:
+		.fill 	6	
+polySign:
+		.fill 	1			
+polyFlag:
+		.fill 	1	
+polyExponent:
+		.fill 	1				
+
+rFlags:
+		.fill 	1
+rExponent:		
+		.fill 	1
+rMantissa:
+		.fill 	4
+
+baseConvert:
+		.fill 	1
+modulusLowByte:
+		.fill 	1	
+
+        * = FloatCode
+        

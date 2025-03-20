@@ -2,18 +2,25 @@
 # *******************************************************************************************
 #
 #		Name : 		Makefile
-#		Purpose :	Build module
+#		Purpose :	Very simple one off tests.
 #		Date :		9th December 2024
 #		Author : 	Paul Robson (paul@robsons.org.uk)
 #
 # *******************************************************************************************
 # *******************************************************************************************
 
-include ../build_env/common.make
+include ../../build_env/common.make
 
-#
-#		This just test it builds, nothing else.
-#
+n1 = 12.2
+n2 = 3.4
+
 test:
-	$(ASSEMBLER) $(ASMOPTIONS) fwrapper.asm $(ASMTARGETS)
-	echo "Assembles correctly"
+	rm -f dump*.bin
+	$(PYTHON) $(SCRIPTDIR)generate_ifloat.py testdata1 $(n1) >__testdata.inc
+	$(PYTHON) $(SCRIPTDIR)generate_ifloat.py testdata2 $(n2) >>__testdata.inc
+	$(ASSEMBLER) $(ASMOPTIONS) start.asm $(ASMTARGETS)
+	$(RUNEMULATOR)
+
+show:
+	$(PYTHON) $(SCRIPTDIR)show_ifloat.py dump.bin 0x20
+	$(PYTHON) $(SCRIPTDIR)show_ifloat.py dump.bin 0x26
