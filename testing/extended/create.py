@@ -37,6 +37,14 @@ class TestGenerator(object):
     def createUnaryTest(self,n1,func):
         self.createBinaryTest(n1,0,func)
     #
+    #       String test (e.g. to int, to float)
+    #
+    def createStringTest(self,s1,func):
+        self.test = [ func ]
+        self.test += [ ord(c) for c in s1 ]
+        self.padTest()
+        self.outputTest()
+    #
     #       Output test to target
     #
     def outputTest(self):
@@ -92,5 +100,13 @@ if __name__ == "__main__":
     t.createUnaryTest(4123,FPCommands.IntegerToDecimalString)
     t.createUnaryTest(1237,FPCommands.FloatToString)
     t.createUnaryTest(123.0456,FPCommands.FloatToString)
+    t.createUnaryTest(-4123,FPCommands.IntegerToDecimalString)
+    t.createUnaryTest(-1237,FPCommands.FloatToString)
+    t.createUnaryTest(-123.0456,FPCommands.FloatToString)
+
+    t.createStringTest("123456",FPCommands.StringToInteger)
+    t.createStringTest("1237.456",FPCommands.StringToFloat)
+    t.createStringTest("-1237.456",FPCommands.StringToFloat)
+    #t.createStringTest("-123456",FPCommands.StringToInteger)
 
     t.endTest()

@@ -40,6 +40,8 @@ while data[pos] != 0xFF:
     cmd = data[pos]
     if cmd == FPCommands.FloatToString or cmd == FPCommands.IntegerToDecimalString or cmd == FPCommands.IntegerToString:
         print("${0:04x} : {1} [{2}] => {3}".format(pos,number(pos+1),cmd,string(pos+13)))
+    elif cmd == FPCommands.StringToFloat or cmd == FPCommands.StringToInteger:
+        print("${0:04x} : {1} [{2}] => {3}".format(pos,string(pos+1),cmd,number(pos+13)))
     else:
         print("${0:04x} : {1} [{2}] {3} => {4}".format(pos,number(pos+1),cmd,number(pos+7),number(pos+13)))
     pos += 32

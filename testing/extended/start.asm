@@ -34,6 +34,14 @@ _TestLoop:
         lda     (testPtr)                   ; check if reached end of the tests
         bmi     _TestExit
 
+        clc                                 ; set string pointer in case it is one.
+        lda     testPtr     
+        adc     #1
+        sta     floatZ0
+        lda     testPtr+1
+        adc     #0
+        sta     floatZ0+1
+
         ldy     #1
 _TestCopy:
         lda     (testPtr),y                 ; copy the test data in as numbers initially.
