@@ -13,12 +13,14 @@
         .include "__commands.inc"
 
         .include "6502/fp_macros_6502.inc"
+        .include "65816/fp_macros_65816.inc"
+
+        .include "dispatch.asm"
+        .include "__vectors.asm"
+        
+        .include "65816/fp_utility_65816.asm"        
         .include "6502/fp_utility_6502.asm"        
 
-        .include "65816/fp_macros_65816.inc"
-        .include "65816/fp_utility_65816.asm"        
-
-        .include "__vectors.asm"
         ;
         ;       The basic arithmetic operations
         ;        

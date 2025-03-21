@@ -214,6 +214,7 @@ FloatJumpIX .macro
         .endm        
 
 FloatCommand .macro                         ; call command \1
+        jsr     FloatEntry                  ; likely jsl for 65816
         .endm
 
 FloatExit .macro 
