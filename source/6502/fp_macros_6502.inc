@@ -213,7 +213,8 @@ FloatJumpIX .macro
         jmp     (\1,x)                      ; this may need to be jmp [\1,x] for 65816
         .endm        
 
-FloatCommand .macro                         ; call command \1
+FloatDo .macro                              ; call command \1
+        lda     #FTCMD_\1
         jsr     FloatEntry                  ; likely jsl for 65816
         .endm
 

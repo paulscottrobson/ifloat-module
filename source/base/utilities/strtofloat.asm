@@ -65,7 +65,8 @@ _FSTFDecimalPart:
         FloatPush32A                        ; push FPA on the stack.
         jsr     FloatStringToInteger        ; get the Decimal Point bit, divisor is in A
         bcs     _FSTFExit                   ; bad number.
-        jsr     FloatScale10                ; divide by 10^A
+        tay                                 ; put in Y
+        jsr     FloatScale10                ; divide by 10^Y
         FloatPop32B                         ; FPA is fractional part, FPB integer part
         jsr     FloatAdd                    ; add them together.
 _FSTFExitOkay:

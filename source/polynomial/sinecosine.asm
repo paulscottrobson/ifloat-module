@@ -15,13 +15,13 @@
 ;
 ; *******************************************************************************************
 
-PolyCosine:
+FloatCosine:
         pha
         phx
         phy
         PolyConstantToB FloatConst_PiDiv2   ; add Pi/2
         jsr     FloatAdd                    
-        jsr     PolySine                    ; calculate sin(x+pi/2)
+        jsr     FloatSine                   ; calculate sin(x+pi/2)
         ply
         plx
         pla
@@ -33,7 +33,7 @@ PolyCosine:
 ;
 ; *******************************************************************************************
 
-PolySine:
+FloatSine:
         pha
         phx
         phy
@@ -92,7 +92,7 @@ _PSNotQ13:
         ;       Apply the polynomial and multiply by the saved value.
         ;
         ldx     #PolynomialSineData-PolynomialData
-        jsr     PolyEvaluate
+        jsr     FloatEvaluatePoly
         FloatPop32B                         ; now multiply by the original value
         jsr     FloatMultiply               
 

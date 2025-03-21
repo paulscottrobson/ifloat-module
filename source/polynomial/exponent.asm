@@ -15,7 +15,7 @@
 ;
 ; *******************************************************************************************
 
-PolyExponent:
+FloatExponent:
         pha
         phx
         phy
@@ -59,7 +59,7 @@ _PENotNegative:
         ;       Take fractional part of FPA and calculate the Polynomial (which is 2^x, not the standard exp() taylor series)
         ;
         ldx     #PolynomialExpData-PolynomialData
-        jsr     PolyEvaluate
+        jsr     FloatEvaluatePoly
         ;
         ;       Add the exponent extracted earlier
         ;

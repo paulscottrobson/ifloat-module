@@ -16,15 +16,15 @@
 ; *******************************************************************************************
 
 FloatIntegerToDecimalString:
-        pha
-        lda     #10
+        phy
+        ldy     #10
         jsr     FloatIntegerToString        
-        pla
+        ply
         rts
 
 ; *******************************************************************************************
 ;
-;                   Convert the integer in FPA to a String in Base A
+;                   Convert the integer in FPA to a String in Base Y
 ;
 ; *******************************************************************************************
 
@@ -32,7 +32,7 @@ FloatIntegerToString:
         pha                                 ; save registers
         phx
         phy
-        sta     floatBaseConvert            ; save the base to convert
+        sty     floatBaseConvert            ; save the base to convert
 
         stz     floatBufferSize             ; clear the buffer, both NULL terminated and length prefixed.
         stz     floatBufferString

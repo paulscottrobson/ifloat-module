@@ -18,33 +18,31 @@
 Boot:
 		ldx 	#$FF
 		txs
+        jmp     Start
 
+        .include "../../source/float.asm"
+
+Start:
 		ldx 	#11 						; copy in test data.
 -		lda 	testdata1,x
 		sta 	floatAFlags,x
 		dex
 		bpl 	-
 
-        lda     #1
-        sta     floatBufferSize
-        lda     #"?"
-        sta     floatBufferString
-
         lda     #_testString & $FF
         sta     floatZ0
         lda     #_testString >> 8
         sta     floatZ0+1
 
-		jsr 	PolyTangent
+		FloatDo StringToFloat
 
 		jmp 	$FFFF
 
 _testString:
-        .text   '12346.17',0
+        .text   '512.471',0
         ;
         ;       Use one of the two depending on whether you want the multi-file version or the one file library.
         ;
-        .include "../../source/float.asm"
 ;        .include "../../build/ifloat.library"
 
         .include "__testdata.inc"		

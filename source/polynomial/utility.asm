@@ -16,7 +16,7 @@
 ;
 ; *******************************************************************************************
 
-PolyEvaluate:
+FloatEvaluatePoly:
         lda     PolynomialData,x            ; get the number to do
         inx                                 ; point to first number.
         sta     polyCoefficientCount        ; count of numbers

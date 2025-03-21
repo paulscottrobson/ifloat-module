@@ -19,6 +19,10 @@ FloatEntry:
         cmp     #FTCMD_COUNT                ; illegal command
         bcs     _FEExit                     ; exit with CS.
 
+        stz     floatStackPointer           ; clear stack
+        stz     floatBufferSize             ; clear return string.
+        stz     floatBufferString
+
         phx                                 ; save registers, not A
         phy
         asl     a                           ; 4 bytes / entry in jump table

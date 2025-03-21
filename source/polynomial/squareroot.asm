@@ -15,7 +15,7 @@
 ;
 ; *******************************************************************************************
 
-PolySquareRoot:
+FloatSquareRoot:
         pha
         phx
         phy
@@ -23,9 +23,9 @@ PolySquareRoot:
         sec
         bmi     _PSRExit                    ; if so exit with carry set
 
-        jsr     PolyLogarithmE              ; Log(FPA)
+        jsr     FloatLogarithmE             ; Log(FPA)
         dec     floatAExponent              ; / 2
-        jsr     PolyExponent                ; Exp(FPA)
+        jsr     FloatExponent               ; Exp(FPA)
         clc
 _PSRExit:
         ply

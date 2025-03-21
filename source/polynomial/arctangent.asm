@@ -15,7 +15,7 @@
 ;
 ; *******************************************************************************************
 
-PolyArcTangent:
+FloatArcTangent:
         pha
         phx
         phy
@@ -55,7 +55,7 @@ _PATNotAdjust:
         ;       Apply the polynomial and multiply by the saved value.
         ;
         ldx     #PolynomialArctanData-PolynomialData
-        jsr     PolyEvaluate
+        jsr     FloatEvaluatePoly
         FloatPop32B                         ; now multiply by the original value
         jsr     FloatMultiply               
         ;

@@ -15,7 +15,7 @@
 ;
 ; *******************************************************************************************
 
-PolyLogarithmE:
+FloatLogarithmE:
         pha
         phx
         phy
@@ -59,7 +59,7 @@ PolyLogarithmE:
         ;       Apply the polynomial
         ;
         ldx     #PolynomialLogData-PolynomialData
-        jsr     PolyEvaluate
+        jsr     FloatEvaluatePoly
         ;
         ;       Add the exponent offset
         ;

@@ -15,17 +15,17 @@
 ;
 ; *******************************************************************************************
 
-PolyTangent:
+FloatTangent:
         pha
         phx
         phy
 
         FloatPush32A                        ; save FPA on stack
-        jsr     PolyCosine                  ; FPA is cos(x)
+        jsr     FloatCosine                 ; FPA is cos(x)
         FloatPop32B                         ; FPA is cos(x) FPB (x)
         FloatPush32A                        ; FPB is x, cos(x) on stack
         FloatCopy32BA                       ; FPA is x, cos(x) on stack
-        jsr     PolySine                    ; FPA is sin(x), cos(x) on stack
+        jsr     FloatSine                   ; FPA is sin(x), cos(x) on stack
         FloatPop32B                         ; FPA is sin(x), FPB is cos(x)
 
         FloatTest32B                        ; check cos(x) is zero.
