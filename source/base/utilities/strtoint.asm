@@ -23,6 +23,11 @@ FloatStringToInteger:
 
         FloatClear32A                       ; set the F{A register to zero.
         ldy     #0                          ; start from here.
+        FloatLoadIY floatZ0                 ; get and push sign
+        pha
+        cmp     #"-"                        ; if -ve skip it
+        bne     _FSILoop
+        iny
 _FSILoop:   
         FloatLoadIY floatZ0                 ; get next character
         cmp     #'0'                        ; check validity
@@ -41,6 +46,7 @@ _FSILoop:
         lda     floatAExponent              ; check still an integer.
         beq     _FSILoop
 _FSIFail:                                   ; overflow, or no digits at all.
+        pla                                 ; throw sign 
         sec         
         lda     #0                          ; return zero consumed as error.
         ply                                 ; restore registers
@@ -48,6 +54,12 @@ _FSIFail:                                   ; overflow, or no digits at all.
         rts             
 
 _FSIExit:
+        pla                                 ; get sign.
+        cmp     #"-"                        ; was it -ve
+        bne     _FSINotNegative
+        lda     #$80                        ; set sign bit
+        sta     floatAFlags
+_FSINotNegative:        
         tya                                 ; check consumed at least one digit ? count in Y
         beq     _FSIFail
         ply                                 ; restore registers

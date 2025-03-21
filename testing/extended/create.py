@@ -107,6 +107,6 @@ if __name__ == "__main__":
     t.createStringTest("123456",FPCommands.StringToInteger)
     t.createStringTest("1237.456",FPCommands.StringToFloat)
     t.createStringTest("-1237.456",FPCommands.StringToFloat)
-    #t.createStringTest("-123456",FPCommands.StringToInteger)
+    t.createStringTest("-123456",FPCommands.StringToInteger)
 
     t.endTest()
