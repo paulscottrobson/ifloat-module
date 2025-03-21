@@ -2,7 +2,7 @@
 # *******************************************************************************************
 #
 #		Name : 		create.py
-#		Purpose :	Unit test creation.
+#		Purpose :	Unit test creation simple.
 #		Date :		21st March 2025
 #		Author : 	Paul Robson (paul@robsons.org.uk)
 #
@@ -35,7 +35,7 @@ class TestGenerator(object):
     #       Numerical unary test
     #
     def createUnaryTest(self,n1,func):
-        self.createBinaryTest(self,n1,0,func)
+        self.createBinaryTest(n1,0,func)
     #
     #       Output test to target
     #
@@ -46,7 +46,7 @@ class TestGenerator(object):
     #
     def addNumber(self,n):
         n = IFloat(n)
-        self.test += [ 0x80 if n.isNegative else 0x00 , n.exponent ]
+        self.test += [ 0x80 if n.isNegative else 0x00 , n.exponent & 0xFF]
         for i in range(0,4):
             self.test.append((n.mantissa >> (i * 8)) & 0xFF)
     #
@@ -61,10 +61,29 @@ class TestGenerator(object):
     def endTest(self):
         self.target.write("\t.byte\t$FF\n")
 
-t = TestGenerator()
-t.createBinaryTest(42,11,FPCommands.Add)
-t.createBinaryTest(42,11,FPCommands.Subtract)
-t.createBinaryTest(42,11,FPCommands.Multiply)
-t.createBinaryTest(42,11,FPCommands.Divide)
-t.createBinaryTest(42,11,FPCommands.IntDivide)
-t.endTest()
+#
+#       Manually created for development & debugging.
+#
+if __name__ == "__main__":
+    t = TestGenerator()
+    t.createBinaryTest(22,7,FPCommands.Add)
+    t.createBinaryTest(22,7,FPCommands.Subtract)
+    t.createBinaryTest(22,7,FPCommands.Multiply)
+    t.createBinaryTest(22,7,FPCommands.Divide)
+    t.createBinaryTest(22,7,FPCommands.IntDivide)
+
+    t.createBinaryTest(22.5,7,FPCommands.Add)
+    t.createBinaryTest(22.5,7,FPCommands.Subtract)
+    t.createBinaryTest(22.5,7,FPCommands.Multiply)
+    t.createBinaryTest(22.5,7,FPCommands.Divide)
+    t.createBinaryTest(22.5,7,FPCommands.IntDivide)
+
+    t.createUnaryTest(123.456,FPCommands.Fractional)
+    t.createUnaryTest(123.456,FPCommands.Integer)
+
+    t.createUnaryTest(65,FPCommands.SquareRoot)
+    t.createUnaryTest(1,FPCommands.Sine)
+    t.createUnaryTest(1,FPCommands.Cosine)
+    t.createUnaryTest(1,FPCommands.Tangent)
+    t.createUnaryTest(1,FPCommands.ArcTangent)
+    t.endTest()

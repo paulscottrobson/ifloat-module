@@ -30,7 +30,7 @@ assemble:
 	$(ASSEMBLER) $(ASMOPTIONS) start.asm $(ASMTARGETS)
 
 show:
-	echo "Do results"
+	$(PYTHON) viewer.py
 
 run: test show
 
