@@ -42,4 +42,10 @@ build: .any
 	$(PYTHON) $(SCRIPTDIR)generate_ifloat.py FloatConst_MinusSqr2 	"-math.sqrt(2)" 		>>$(SOURCEDIR)polynomial/__constants.asm
 	$(PYTHON) $(SCRIPTDIR)generate_ifloat.py FloatConst_Sqr0_5 		"math.sqrt(0.5)" 		>>$(SOURCEDIR)polynomial/__constants.asm
 	#
+	#		Generate files & vector tables for the floating point operations supported.
+	#
+	$(PYTHON) $(SCRIPTDIR)export.py C >$(SOURCEDIR)__commands.inc
+	$(PYTHON) $(SCRIPTDIR)export.py V >$(SOURCEDIR)__vectors.asm
+	$(PYTHON) $(SCRIPTDIR)export.py P >$(SCRIPTDIR)__fpconsts.py
+
 	echo "Data & tables built."

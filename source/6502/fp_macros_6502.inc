@@ -187,7 +187,7 @@ FloatPop32B .macro
 
 ; -------------------------------------------------------------------------------------------
 ;
-;                                   Access Macros
+;                                      Access Macros
 ;
 ; -------------------------------------------------------------------------------------------
 
@@ -197,4 +197,25 @@ FloatLoadI .macro
 
 FloatLoadIY .macro
         lda     (\1),y
+        .endm        
+
+; -------------------------------------------------------------------------------------------
+;
+;                                      Vector Table Creation
+;
+; -------------------------------------------------------------------------------------------
+
+FloatVector .macro
+        .word   (\1) & $FFFF, (\1) >> 16    ; create a 4 byte vector, used for *both*.
+        .endm        
+
+FloatJumpIX .macro
+        jmp     (\1,x)                      ; this may need to be jmp [\1,x] for 65816
+        .endm        
+
+FloatCommand .macro                         ; call command \1
+        .endm
+
+FloatExit .macro 
+        rts                                 ; the final return. Likely rtl for 65816                       
         .endm        

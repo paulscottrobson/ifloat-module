@@ -44,7 +44,7 @@ _FSTFNoMinus:
         cmp     #"."                        ; if so, convert to decimal.
         beq     _FSTFDecimalPart
 
-        jsr     FloatStringToInt            ; get the integer part first.
+        jsr     FloatStringToInteger        ; get the integer part first.
         bcs     _FSTFExit                   ; bad number.
         tay                                 ; count of characters in Y
         FloatLoadIY floatZ0                 ; what follows is '.'
@@ -63,7 +63,7 @@ _FSTFDecimalPart:
         cmp     #'9'+1
         bcs     _FSTFExitOkay
         FloatPush32A                        ; push FPA on the stack.
-        jsr     FloatStringToInt            ; get the Decimal Point bit, divisor is in A
+        jsr     FloatStringToInteger        ; get the Decimal Point bit, divisor is in A
         bcs     _FSTFExit                   ; bad number.
         jsr     FloatScale10                ; divide by 10^A
         FloatPop32B                         ; FPA is fractional part, FPB integer part
