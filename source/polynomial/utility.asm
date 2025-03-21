@@ -23,7 +23,7 @@ FloatEvaluatePoly:
 
         ldy     #5                          ; copy poly x to workspace
 _PECopy1:
-        lda     floatAFlags,y
+        lda     floatA,y
         sta     polyTempFloat,y
         dey 
         bpl     _PECopy1
@@ -34,7 +34,7 @@ _PEEvaluateLoop:
         ldy     #5                          ; copy X back to FPB
 _PECopy2:
         lda     polyTempFloat,y
-        sta     floatBFlags,y
+        sta     floatB,y
         dey 
         bpl     _PECopy2
         jsr     FloatMultiply               ; and multiply into FPA
@@ -42,7 +42,7 @@ _PECopy2:
         ldy     #0                          ; copy the next coefficient into FPB
 _PECopy3:
         lda     PolynomialData,x
-        sta     floatBFlags,y
+        sta     floatB,y
         inx     
         iny
         cpy     #6
@@ -78,7 +78,7 @@ PolyConstantToACode:
         ldy     #0
 _PCACLoop:
         lda     FloatConst_1Div2Pi,x
-        sta     floatAFlags,y
+        sta     floatA,y
         inx
         iny
         cpy     #6
@@ -94,7 +94,7 @@ PolyConstantToBCode:
         ldy     #0
 _PCACLoop:
         lda     FloatConst_1Div2Pi,x
-        sta     floatBFlags,y
+        sta     floatB,y
         inx
         iny
         cpy     #6

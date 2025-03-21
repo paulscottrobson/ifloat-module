@@ -24,7 +24,8 @@ FloatExponent:
         ;
         lda     floatAFlags
         sta     polySign
-        stz     floatAFlags
+        and     #$7F
+        sta     floatAFlags
         ;
         ;       Multiply FPA by log2 e
         ;

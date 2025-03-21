@@ -55,6 +55,10 @@ _FMFDivide:
         sta     floatAExponent           
         pla                                 ; restore sign.
         and     #$80
+        sta     floatBFlags
+        lda     floatAFlags
+        and     #$7F
+        ora     floatBFlags
         sta     floatAFlags
 
         jsr     FloatCheckMinusZero         ; -0 check required here.

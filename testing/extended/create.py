@@ -109,4 +109,5 @@ if __name__ == "__main__":
     t.createStringTest("-1237.456",FPCommands.StringToFloat)
     t.createStringTest("-123456",FPCommands.StringToInteger)
 
+    print(math.sin(1))
     t.endTest()

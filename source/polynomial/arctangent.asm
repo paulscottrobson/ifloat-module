@@ -23,7 +23,8 @@ FloatArcTangent:
 
         lda     floatAFlags                 ; save the current sign of FPA 
         sta     polySign                    
-        stz     floatAFlags                 ; take absolute value of A
+        and     #$7F
+        sta     floatAFlags                 ; take absolute value of A
 
         ;
         ;       if FPA >= 1.0, take reciprocal of FPA

@@ -19,12 +19,16 @@ floatCodeResume = *
 
         * = zeroPageSpace
 
+floatA:
+
 floatAFlags:
 		.fill 	1
 floatAExponent:		
 		.fill 	1
 floatAMantissa:
 		.fill 	4
+
+floatB:
 
 floatBFlags:
 		.fill 	1
@@ -60,6 +64,7 @@ polyFlag:
 polyExponentTemp:
 		.fill 	1				
 
+floatR:
 floatRFlags:
 		.fill 	1
 floatRExponent:		

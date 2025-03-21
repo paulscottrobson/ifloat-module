@@ -20,7 +20,9 @@ FloatFractional:
         phx
         phy
         jsr     FloatNormaliseA             ; normalise FPA
-        stz     floatAFlags                 ; take absolute value of FPA
+        lda     floatAFlags                 ; take absolute value of FPA
+        and     #$7F
+        sta     floatAFlags
 
         lda     floatAExponent              ; check exponent
         bpl     _FFZero                     ; if >= 0 then return zero.

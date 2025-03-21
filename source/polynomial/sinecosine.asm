@@ -40,8 +40,9 @@ FloatSine:
         phy
 
         lda     floatAFlags                 ; save original sign
-        sta     polySign                    
-        stz     floatAFlags                 ; take absolute value
+        sta     polySign   
+        and     #$7F                 
+        sta     floatAFlags                 ; take absolute value
         ;
         ;       Divide FPA by 2.Pi and take fractional part, forcing result into the '360' range
         ;

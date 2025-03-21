@@ -56,7 +56,7 @@ FloatSet32B6502:
 ; -------------------------------------------------------------------------------------------
 
 FloatCopy32BA6502:
-        FloatCopyReg floatBFlags,floatAFlags
+        FloatCopyReg floatB,floatA
         rts
 
 ; -------------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ FloatCopy32BA6502:
 ; -------------------------------------------------------------------------------------------
 
 FloatCopy32AR6502:
-        FloatCopyReg floatAFlags,floatRFlags
+        FloatCopyReg floatA,floatR
         rts
 
 ; -------------------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ FloatCopy32AR6502:
 ; -------------------------------------------------------------------------------------------
 
 FloatCopy32RA6502:
-        FloatCopyReg floatRFlags,floatAFlags
+        FloatCopyReg floatR,floatA
         rts
     
 ; -------------------------------------------------------------------------------------------
@@ -237,7 +237,7 @@ FloatTest32R6502:
 FloatPush32A6502:
         ldy     floatStackPointer
         ldx     #5
-_FPLoop:lda     floatAFlags,x
+_FPLoop:lda     floatA,x
         sta     floatStack,y
         iny
         dex
@@ -257,7 +257,7 @@ FloatPop32B6502:
         ldx     #0
 _FPLoop:dey
         lda     floatStack,y
-        sta     floatBFlags,x
+        sta     floatB,x
         inx
         cpx     #6
         bne     _FPLoop        
