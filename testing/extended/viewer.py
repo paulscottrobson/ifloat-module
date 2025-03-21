@@ -27,9 +27,19 @@ def number(p):
     n.mantissa = data[p+2] + (data[p+3] << 8) + (data[p+4] << 16) + (data[p+5] << 24)
     return n.get()
 
+def string(p):
+    s = ""
+    while data[p] != 0:
+        s = s + chr(data[p])
+        p += 1
+    return '"'+s+'"'
+
 data = [x for x in open("dump.bin","rb").read(-1)]
 pos = 0x2000
 while data[pos] != 0xFF:
     cmd = data[pos]
-    print("${0:04x} : {1} [{2}] {3} => {4}".format(pos,number(pos+1),cmd,number(pos+7),number(pos+13)))
+    if cmd == FPCommands.FloatToString or cmd == FPCommands.IntegerToDecimalString or cmd == FPCommands.IntegerToString:
+        print("${0:04x} : {1} [{2}] => {3}".format(pos,number(pos+1),cmd,string(pos+13)))
+    else:
+        print("${0:04x} : {1} [{2}] {3} => {4}".format(pos,number(pos+1),cmd,number(pos+7),number(pos+13)))
     pos += 32

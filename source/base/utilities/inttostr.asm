@@ -19,7 +19,7 @@ FloatIntegerToDecimalString:
         phy
         ldy     #10
         jsr     FloatIntegerToString        
-        ply
+        ply        
         rts
 
 ; *******************************************************************************************
@@ -47,6 +47,7 @@ _FITSPositive:
         ply                                 ; restore registers
         plx
         pla
+        clc
         rts             
 
 _FITSRecursive:

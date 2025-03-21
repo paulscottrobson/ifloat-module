@@ -46,5 +46,6 @@ _FSCExit:
         ply                                 ; restore registers
         plx
         pla
+        clc
         rts             
 

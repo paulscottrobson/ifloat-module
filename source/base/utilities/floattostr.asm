@@ -25,6 +25,7 @@ FloatFloatToString:
         ply
         plx
         pla
+        clc
         rts
 
 _FFTSFloat:
@@ -71,6 +72,7 @@ _FFTSNotTrailingZero:
         ply
         plx
         pla
+        clc
         rts
 
         

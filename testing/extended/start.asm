@@ -55,6 +55,26 @@ _TestCopy2:
         cpy     #19
         bne     _TestCopy2
 
+        lda     (testPtr)
+        cmp     #FTCMD_FloatToString        ; returns a string
+        beq     _TestCopyString
+        cmp     #FTCMD_IntegerToDecimalString
+        beq     _TestCopyString
+        cmp     #FTCMD_IntegerToString
+        bne     _TestNext
+
+_TestCopyString:                            ; copy string into result area.
+        ldx     #0
+        ldy     #13
+_TestCSLoop:
+        lda     floatBufferString,x
+        sta     (testPtr),y
+        inx
+        iny
+        cpx     #12
+        bne     _TestCSLoop
+                
+_TestNext:        
         clc                                 ; do next test.
         lda     testPtr
         adc     #32

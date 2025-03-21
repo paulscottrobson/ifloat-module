@@ -68,12 +68,14 @@ if __name__ == "__main__":
     t = TestGenerator()
     t.createBinaryTest(22,7,FPCommands.Add)
     t.createBinaryTest(22,7,FPCommands.Subtract)
+    t.createBinaryTest(22,22,FPCommands.Subtract)
     t.createBinaryTest(22,7,FPCommands.Multiply)
     t.createBinaryTest(22,7,FPCommands.Divide)
     t.createBinaryTest(22,7,FPCommands.IntDivide)
 
     t.createBinaryTest(22.5,7,FPCommands.Add)
     t.createBinaryTest(22.5,7,FPCommands.Subtract)
+    t.createBinaryTest(22.53,22.53,FPCommands.Subtract)
     t.createBinaryTest(22.5,7,FPCommands.Multiply)
     t.createBinaryTest(22.5,7,FPCommands.Divide)
     t.createBinaryTest(22.5,7,FPCommands.IntDivide)
@@ -86,4 +88,9 @@ if __name__ == "__main__":
     t.createUnaryTest(1,FPCommands.Cosine)
     t.createUnaryTest(1,FPCommands.Tangent)
     t.createUnaryTest(1,FPCommands.ArcTangent)
+
+    t.createUnaryTest(4123,FPCommands.IntegerToDecimalString)
+    t.createUnaryTest(1237,FPCommands.FloatToString)
+    t.createUnaryTest(123.0456,FPCommands.FloatToString)
+
     t.endTest()
