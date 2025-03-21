@@ -57,6 +57,7 @@ _FFExit:
         ply                                 ; restore registers
         plx
         pla
+        clc
         rts             
 
 _FFBitStrip:    

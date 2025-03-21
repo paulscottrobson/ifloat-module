@@ -36,5 +36,6 @@ _FIExit:
         ply                                 ; restore registers
         plx
         pla
+        clc
         rts             
 

@@ -79,5 +79,6 @@ _PATNoFixup:
         ply
         plx
         pla
+        clc
         rts
 

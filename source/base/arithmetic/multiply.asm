@@ -31,6 +31,7 @@ _FMExit1:
         ply                                 ; restore registers
         plx
         pla
+        clc
         rts     
         ;
         ;       Floating point multiply, also works as an integer operation, but if integer overflows
