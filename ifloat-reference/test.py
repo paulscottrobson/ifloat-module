@@ -1,10 +1,10 @@
 # *******************************************************************************************
 # *******************************************************************************************
 #
-#		Name : 		test.py
-#		Purpose :	Test all
-#		Date :		20th March 2025
-#		Author : 	Paul Robson (paul@robsons.org.uk)
+#       Name :      test.py
+#       Purpose :   Test all
+#       Date :      20th March 2025
+#       Author :    Paul Robson (paul@robsons.org.uk)
 #
 # *******************************************************************************************
 # *******************************************************************************************
@@ -25,8 +25,8 @@ unaList = [ IntegerOperation(),FractionalOperation() ]
 intOp = IntegerDivideOperation()
 
 for i in range(0,1000*1000):
-	for b in binList:
-		b.test()
-	for u in unaList:
-		u.test()
-	intOp.test(True)
+    for b in binList:
+        b.test()
+    for u in unaList:
+        u.test()
+    intOp.test(True)
