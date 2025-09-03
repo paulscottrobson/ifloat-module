@@ -17,6 +17,9 @@ n2 = 3.1
 check:
 	$(MAKE) -C $(SOURCEDIR) test
 
+go:
+	$(RUNEMULATOR)
+	
 test: assemble
 	$(RUNEMULATOR)
 

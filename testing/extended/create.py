@@ -73,41 +73,58 @@ class TestGenerator(object):
 #       Manually created for development & debugging.
 #
 if __name__ == "__main__":
+    random.seed()
+    seed = random.randint(0,9999)
+    random.seed(seed)
+
+    sys.stderr.write("Seed {0}\n".format(seed))
     t = TestGenerator()
-    t.createBinaryTest(22,7,FPCommands.Add)
-    t.createBinaryTest(22,7,FPCommands.Subtract)
-    t.createBinaryTest(22,22,FPCommands.Subtract)
-    t.createBinaryTest(22,7,FPCommands.Multiply)
-    t.createBinaryTest(22,7,FPCommands.Divide)
-    t.createBinaryTest(22,7,FPCommands.IntDivide)
 
-    t.createBinaryTest(22.5,7,FPCommands.Add)
-    t.createBinaryTest(22.5,7,FPCommands.Subtract)
-    t.createBinaryTest(22.53,22.53,FPCommands.Subtract)
-    t.createBinaryTest(22.5,7,FPCommands.Multiply)
-    t.createBinaryTest(22.5,7,FPCommands.Divide)
-    t.createBinaryTest(22.5,7,FPCommands.IntDivide)
+    for s in range(0,1):
+        n1 = random.randint(-1000001,100000)
+        n2 = 0
+        while n2 == 0:
+            n2 = random.randint(-10000,10000)
+        t.createBinaryTest(n1,n2,FPCommands.Add)
+        t.createBinaryTest(n1,n2,FPCommands.Subtract)
+        t.createBinaryTest(n1,n1,FPCommands.Subtract)
+        t.createBinaryTest(n1,n2,FPCommands.Multiply)
+        t.createBinaryTest(n1,n2,FPCommands.Divide)
+        t.createBinaryTest(n1,n2,FPCommands.IntDivide)
 
-    t.createUnaryTest(123.456,FPCommands.Fractional)
-    t.createUnaryTest(123.456,FPCommands.Integer)
+        n1 = random.randint(-1000000,10000000)/100
+        n2 = 0.0
+        while n2 == 0.0:
+            n2 = random.randint(-100000,1000000)/100
+        t.createBinaryTest(n1,n2,FPCommands.Add)
+        t.createBinaryTest(n1,n2,FPCommands.Subtract)
+        t.createBinaryTest(n1,n1,FPCommands.Subtract)
+        t.createBinaryTest(n1,n2,FPCommands.Multiply)
+        t.createBinaryTest(n1,n2,FPCommands.Divide)
+        
+        n1 = random.randint(-100000,100000)/100
+        t.createUnaryTest(n1,FPCommands.Fractional)
+        t.createUnaryTest(n1,FPCommands.Integer)
 
-    t.createUnaryTest(65,FPCommands.SquareRoot)
-    t.createUnaryTest(1,FPCommands.Sine)
-    t.createUnaryTest(1,FPCommands.Cosine)
-    t.createUnaryTest(1,FPCommands.Tangent)
-    t.createUnaryTest(1,FPCommands.ArcTangent)
+        t.createUnaryTest(abs(n1),FPCommands.SquareRoot)
 
-    t.createUnaryTest(4123,FPCommands.IntegerToDecimalString)
-    t.createUnaryTest(1237,FPCommands.FloatToString)
-    t.createUnaryTest(123.0456,FPCommands.FloatToString)
-    t.createUnaryTest(-4123,FPCommands.IntegerToDecimalString)
-    t.createUnaryTest(-1237,FPCommands.FloatToString)
-    t.createUnaryTest(-123.0456,FPCommands.FloatToString)
+        n1 = random.randint(-2000,2000)/1000
+        t.createUnaryTest(n1,FPCommands.Sine)
+        t.createUnaryTest(n1,FPCommands.Cosine)
+        t.createUnaryTest(n1,FPCommands.Tangent)
+        t.createUnaryTest(n1,FPCommands.ArcTangent)
 
-    t.createStringTest("123456",FPCommands.StringToInteger)
-    t.createStringTest("1237.456",FPCommands.StringToFloat)
-    t.createStringTest("-1237.456",FPCommands.StringToFloat)
-    t.createStringTest("-123456",FPCommands.StringToInteger)
+        n1 = random.randint(-100000,100000)
+        n2 = random.randint(-100000,100000)/100
+        t.createUnaryTest(n1,FPCommands.IntegerToDecimalString)
+        t.createUnaryTest(n2,FPCommands.FloatToString)
+        t.createUnaryTest(-n1,FPCommands.IntegerToDecimalString)
+        t.createUnaryTest(-n1,FPCommands.FloatToString)
+        t.createUnaryTest(-n2,FPCommands.FloatToString)
 
-    print(math.sin(1))
+        t.createStringTest(str(n1),FPCommands.StringToInteger)
+        t.createStringTest(str(n2),FPCommands.StringToFloat)
+        t.createStringTest(str(-n1),FPCommands.StringToInteger)
+        t.createStringTest(str(-n2),FPCommands.StringToFloat)
+
     t.endTest()
